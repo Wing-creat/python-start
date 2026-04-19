@@ -1,12 +1,15 @@
 # Python Start
 
-This is my first GitHub repository. I am learning Python and building foundational engineering skills before starting college.
+This is my foundational engineering repository, documenting my progress in Python and basic physics simulations before starting college.
 
-## Included Scripts & Mini-Projects
+## 📂 01_basics
+Basic syntax and logic practices.
+- `hello.py`: Initial setup and environment testing.
+- `bounding_box.py`: A simple computer vision utility for calculating bounding box areas.
 
-- `hello.py`: Initial setup and basic print functions.
-- `free_fall.py`: A physics calculator that computes the final velocity and drop distance of an object in free fall.
-- `sensor_data.py`: A data processing script that simulates and averages ultrasonic sensor readings.
-- `bounding_box.py`: A computer vision utility function that calculates the area of a detected bounding box.
-- `plot_trajectory.py`: A data visualization script using `matplotlib` to plot the distance vs. time curve of a free-falling object.
-- `planet_weights.py`: An interactive universal gravity calculator that computes object weight across different planets.
+## 📂 02_physics_tools
+Scripts for calculating and visualizing physical phenomena.
+- `free_fall.py`: Calculates final velocity and drop distance.
+- `sensor_data.py`: Simulates and averages ultrasonic sensor readings.
+- `plot_trajectory.py`: Uses `matplotlib` to plot a free-falling object's distance vs. time curve.
+- `planet_weights.py`: An interactive gravity calculator across different planets.
