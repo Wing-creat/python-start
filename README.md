@@ -1,7 +1,6 @@
 # Python Start 💍
 
-> **"Arise now, ye Tarnished! Ye dead, who yet live!"**
->
+
 > I am an incoming freshman majoring in Engineering Physics, and a dedicated Tarnished exploring both the Lands Between and the world of Python. This repository documents my journey of mastering engineering tools, physics simulations, and the logic behind game mechanics before starting college.
 
 ## 🕹️ Gaming & Engineering
@@ -24,3 +23,4 @@ Scripts for calculating and visualizing physical phenomena.
 ## 📂 03_game_mechanics
 Deconstructing game engine logic using physics and conditional structures.
 - `elden_ring_fall.py`: An interactive calculator simulating the rigid fall damage logic and survival thresholds in Elden Ring.
+- `boss_combat_log.py`: A combat log script that calculates total damage dealt in a sequence using Python lists and for-loops.
