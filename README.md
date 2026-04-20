@@ -19,6 +19,7 @@ Scripts for calculating and visualizing physical phenomena.
 - `sensor_data.py`: Simulates and averages ultrasonic sensor readings.
 - `plot_trajectory.py`: Uses `matplotlib` to plot a free-falling object's distance vs. time curve.
 - `planet_weights.py`: An interactive universal gravity calculator across different planets.
+- `pendulum_period.py`: A simple pendulum period calculator using the math module.
 
 ## 📂 03_game_mechanics
 Deconstructing game engine logic using physics and conditional structures.
