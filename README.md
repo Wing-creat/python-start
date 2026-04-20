@@ -20,7 +20,7 @@ Scripts for calculating and visualizing physical phenomena.
 - `plot_trajectory.py`: Uses `matplotlib` to plot a free-falling object's distance vs. time curve.
 - `planet_weights.py`: An interactive universal gravity calculator across different planets.
 - `pendulum_period.py`: A simple pendulum period calculator using the math module.
-- `kinetic_energy.py`: A reality model for calculating the energy.
+- `kinetic_energy.py`: A reality model for calculating the energy in the world.
 
 ## 📂 03_game_mechanics
 Deconstructing game engine logic using physics and conditional structures.
