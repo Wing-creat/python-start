@@ -21,6 +21,7 @@ Scripts for calculating and visualizing physical phenomena.
 - `planet_weights.py`: An interactive universal gravity calculator across different planets.
 - `pendulum_period.py`: A simple pendulum period calculator using the math module.
 - `kinetic_energy.py`: A reality model for calculating the energy in the world.
+- `monte_carlo_pi.py`: Demonstrates the Monte Carlo method by estimating the value of Pi using pure random probability and a dart-throwing simulation.
 
 ## 📂 03_game_mechanics
 Deconstructing game engine logic using physics and conditional structures.
