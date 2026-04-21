@@ -26,3 +26,4 @@ Scripts for calculating and visualizing physical phenomena.
 Deconstructing game engine logic using physics and conditional structures.
 - `elden_ring_fall.py`: An interactive calculator simulating the rigid fall damage logic and survival thresholds in Elden Ring.
 - `boss_combat_log.py`: A combat log script that calculates total damage dealt in a sequence using Python lists and for-loops.
+- `weapon_database.py`: A small model for three weapons in Elden Ring.
