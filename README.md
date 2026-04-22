@@ -22,6 +22,8 @@ Scripts for calculating and visualizing physical phenomena.
 - `pendulum_period.py`: A simple pendulum period calculator using the math module.
 - `kinetic_energy.py`: A reality model for calculating the energy in the world.
 - `monte_carlo_pi.py`: Demonstrates the Monte Carlo method by estimating the value of Pi using pure random probability and a dart-throwing simulation.
+- `celestial_body.py`: An Object-Oriented Programming (OOP) model representing celestial bodies to calculate their surface gravity using mass and radius.
+- `projectile_sim.py`: A kinematics simulator that tracks and prints the 2D trajectory of a projectile based on initial velocity and launch angle.
 
 ## 📂 03_game_mechanics
 Deconstructing game engine logic using physics and conditional structures.
