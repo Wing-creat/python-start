@@ -12,6 +12,7 @@ While I tackle the challenges in **Elden Ring**, I apply the exact same persiste
 Basic syntax and logic practices.
 - `hello.py`: Initial setup and environment testing.
 - `bounding_box.py`: A simple computer vision utility for calculating bounding box areas.
+- `cyber_oracle.py`: A fun, geeky Magic 8-Ball that uses random choices and time delays.
 
 ## 📂 02_physics_tools
 Scripts for calculating and visualizing physical phenomena.
