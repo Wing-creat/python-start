@@ -26,6 +26,7 @@ Scripts for calculating and visualizing physical phenomena.
 - `projectile_sim.py`: A kinematics simulator that tracks and prints the 2D trajectory of a projectile based on initial velocity and launch angle.
 - `spring_energy.py`: Calculates elastic potential energy using Hooke's Law.
 - `unit_converter.py`: A quick utility for converting imperial units to metric units for engineering.
+- `aero_drag.py`: Calculates aerodynamic drag force using air density, velocity, drag coefficient, and cross-sectional area.
 
 ## 📂 03_game_mechanics
 Deconstructing game engine logic using physics and conditional structures.
