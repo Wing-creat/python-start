@@ -30,6 +30,7 @@ Core mathematical scripts and simulators for evaluating physical phenomena.
 - `spring_energy.py`: Calculates elastic potential energy utilizing Hooke's Law.
 - `unit_converter.py`: An engineering utility for rapid conversion between imperial and metric measurement systems.
 - `aero_drag.py`: Computes aerodynamic drag force based on fluid density, velocity, and drag coefficients.
+- `thermal_expansion.py`: Computes linear thermal expansion for mechanical materials using temperature variance and expansion coefficients.
 
 ## 📂 03_Systems_Simulation
 Deconstructing software behavior and complex mechanics using non-linear thresholds.
