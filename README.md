@@ -37,3 +37,8 @@ Deconstructing software behavior and complex mechanics using non-linear threshol
 - `elden_ring_fall.py`: A threshold calculator simulating rigid fall-damage constraints based on specific altitude variables.
 - `boss_combat_log.py`: A data parsing script tracking sequential damage output using iterative arrays.
 - `weapon_database.py`: A structured data model managing variable statistics for multiple assets.
+
+## 📂 04_Robotics_Simulator
+A theoretical architecture and Object-Oriented skeleton for an autonomous robot navigation system.
+- `ARCHITECTURE.md`: High-level system design, PID control logic, and A* pathfinding roadmap.
+- `robot_core.py`: Foundational classes defining robot kinematics, environment mapping, and sensor fusion.
