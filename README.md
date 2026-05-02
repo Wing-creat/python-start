@@ -16,12 +16,13 @@ Foundational algorithms, syntax, and computational logic (Legacy codebase).
 ## 📂 01_Numerical_Methods
 Algorithms for solving mathematical models through numerical approximation.
 - `monte_carlo_pi.py`: Demonstrates the Monte Carlo statistical method to approximate Pi via randomized spatial distribution.
+- `plot_monte_carlo.py`: Scatter plot visualization of the Monte Carlo Pi estimation using matplotlib.
 
 ## 📂 02_Computational_Physics
 Core mathematical scripts and simulators for evaluating physical phenomena.
 - `free_fall.py`: Calculates terminal velocity and displacement in a vacuum.
 - `sensor_data.py`: Simulates noise filtering and averaging for ultrasonic sensor data arrays.
-- `plot_trajectory.py`: Data visualization mapping distance vs. time using `matplotlib`.
+- `plot_trajectory.py`: Data visualization mapping 2D projectile trajectory and kinematics using matplotlib.
 - `planet_weights.py`: An interactive universal gravitation calculator for comparative planetary mass.
 - `pendulum_period.py`: Period calculation for a simple pendulum.
 - `kinetic_energy.py`: A classical mechanics model evaluating standard kinetic energy.
