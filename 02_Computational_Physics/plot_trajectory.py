@@ -31,4 +31,4 @@ def plot_kinematics(v0: float, angle_degrees: float, gravity: float = 9.81):
 
 if __name__ == "__main__":
     print("--- 🚀 Initializing Trajectory Visualization ---")
-    plot_kinematics(velocity=50.0, angle=45.0)
+    plot_kinematics(v0=50.0, angle_degrees=45.0)
