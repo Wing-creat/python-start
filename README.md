@@ -43,3 +43,17 @@ Deconstructing software behavior and complex mechanics using non-linear threshol
 A theoretical architecture and Object-Oriented skeleton for an autonomous robot navigation system.
 - `ARCHITECTURE.md`: High-level system design, PID control logic, and A* pathfinding roadmap.
 - `robot_core.py`: Foundational classes defining robot kinematics, environment mapping, and sensor fusion.
+
+---
+
+## 📊 Example Outputs (Visualizations)
+
+As part of the engineering process, raw computational data is visualized to verify physical models and statistical accuracy.
+
+### 1. Kinematics: 2D Projectile Trajectory
+Visualizing the optimal flight path based on initial velocity and launch angle limits.
+![Projectile Trajectory](assets/trajectory_visualization.png)
+
+### 2. Statistics: Monte Carlo Pi Estimation
+A scatter plot demonstrating the random spatial distribution used to approximate Pi.
+![Monte Carlo Pi](assets/monte_carlo_visualization.png)
