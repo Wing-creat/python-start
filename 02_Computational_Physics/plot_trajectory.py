@@ -1,34 +1,49 @@
 # plot_trajectory.py
 import math
 import matplotlib.pyplot as plt
+from typing import List
 
-def plot_kinematics(v0: float, angle_degrees: float, gravity: float = 9.81):
+def plot_multiple_trajectories(v0: float, angles: List[float], gravity: float = 9.81):
     """
-    Simulates and visualizes a 2D projectile trajectory using matplotlib.
+    Visualizes multiple 2D projectile trajectories to compare launch angles.
+    Saves the output directly to the assets folder.
     """
-    angle_radians = math.radians(angle_degrees)
-    time_of_flight = (2 * v0 * math.sin(angle_radians)) / gravity
+    plt.figure(figsize=(10, 6))
     
-    # Generate data points for the trajectory
-    times = [t * (time_of_flight / 100) for t in range(101)]
-    x_vals = [v0 * math.cos(angle_radians) * t for t in times]
-    y_vals = [v0 * math.sin(angle_radians) * t - 0.5 * gravity * (t**2) for t in times]
+    # Define a cool color palette for the lines
+    colors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd']
     
-    # Plotting logic
-    plt.figure(figsize=(10, 5))
-    plt.plot(x_vals, y_vals, label=f'v0 = {v0} m/s, θ = {angle_degrees}°', color='blue', linewidth=2)
+    for i, angle_degrees in enumerate(angles):
+        angle_radians = math.radians(angle_degrees)
+        time_of_flight = (2 * v0 * math.sin(angle_radians)) / gravity
+        
+        # Generate 100 data points for smooth curves
+        times = [t * (time_of_flight / 100) for t in range(101)]
+        x_vals = [v0 * math.cos(angle_radians) * t for t in times]
+        y_vals = [v0 * math.sin(angle_radians) * t - 0.5 * gravity * (t**2) for t in times]
+        
+        max_range = max(x_vals)
+        max_height = max(y_vals)
+        
+        # Plot each trajectory with a detailed label
+        plt.plot(x_vals, y_vals, 
+                 label=f'{angle_degrees}° (Range: {max_range:.1f}m, Height: {max_height:.1f}m)', 
+                 color=colors[i % len(colors)], linewidth=2.5, alpha=0.8)
     
-    plt.title("2D Projectile Motion Trajectory")
-    plt.xlabel("Horizontal Distance (m)")
-    plt.ylabel("Vertical Height (m)")
+    # Chart formatting
+    plt.title(f"Projectile Kinematics: Launch Angle Comparison (v0 = {v0} m/s)", fontsize=14, pad=15)
+    plt.xlabel("Horizontal Distance (m)", fontsize=12)
+    plt.ylabel("Vertical Height (m)", fontsize=12)
     plt.axhline(0, color='black', linewidth=1.5)
-    plt.grid(True, linestyle='--', alpha=0.7)
-    plt.legend()
+    plt.grid(True, linestyle='--', alpha=0.6)
+    plt.legend(loc="upper right", framealpha=0.9)
     
-    # Save the plot as an image instead of just showing it
-    plt.savefig("trajectory_visualization.png", dpi=300)
-    print("✅ Trajectory successfully plotted and saved as 'trajectory_visualization.png'!")
+    # Save directly to the assets folder so the README updates automatically!
+    plt.savefig("assets/trajectory_visualization.png", dpi=300, bbox_inches='tight')
+    print("✅ Multi-angle trajectory plot successfully saved to assets/!")
 
 if __name__ == "__main__":
-    print("--- 🚀 Initializing Trajectory Visualization ---")
-    plot_kinematics(v0=50.0, angle_degrees=45.0)
+    print("--- 🚀 Initializing Advanced Trajectory Visualization ---")
+    # Testing multiple angles at once!
+    test_angles = [30.0, 45.0, 60.0, 75.0]
+    plot_multiple_trajectories(v0=50.0, angles=test_angles)
