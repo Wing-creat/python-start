@@ -32,6 +32,7 @@ Core mathematical scripts and simulators for evaluating physical phenomena.
 - `unit_converter.py`: An engineering utility for rapid conversion between imperial and metric measurement systems.
 - `aero_drag.py`: Computes aerodynamic drag force based on fluid density, velocity, and drag coefficients.
 - `thermal_expansion.py`: Computes linear thermal expansion for mechanical materials using temperature variance and expansion coefficients.
+- `ema_filter.py`: A recursive weighted-average algorithm for real-time sensor noise reduction and signal smoothing.
 
 ## 📂 03_Systems_Simulation
 Deconstructing software behavior and complex mechanics using non-linear thresholds.
