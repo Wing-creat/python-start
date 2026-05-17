@@ -20,17 +20,17 @@ Algorithms for solving mathematical models through numerical approximation.
 
 ## 📂 02_Computational_Physics
 Core mathematical scripts and simulators for evaluating physical phenomena.
-- `free_fall.py`: Calculates terminal velocity and displacement in a vacuum.
+- `free_fall.py`: Multi-scenario kinematics simulator for objects in free fall, featuring robust exception handling.
 - `sensor_data.py`: Simulates noise filtering and averaging for ultrasonic sensor data arrays.
 - `plot_trajectory.py`: Data visualization mapping 2D projectile trajectory and kinematics using matplotlib.
 - `planet_weights.py`: An interactive universal gravitation calculator for comparative planetary mass.
 - `pendulum_period.py`: Period calculation for a simple pendulum.
-- `kinetic_energy.py`: A classical mechanics model evaluating standard kinetic energy.
+- `kinetic_energy.py`: Classical mechanics model evaluating standard kinetic energy with strict physical constraints and test scenarios.
 - `celestial_body.py`: An Object-Oriented Programming (OOP) model defining celestial objects to compute surface gravity.
 - `projectile_sim.py`: A 2D kinematics simulator tracking optimal trajectory based on velocity and launch angle.
 - `spring_energy.py`: Calculates elastic potential energy utilizing Hooke's Law.
 - `unit_converter.py`: An engineering utility for rapid conversion between imperial and metric measurement systems.
-- `aero_drag.py`: Computes aerodynamic drag force based on fluid density, velocity, and drag coefficients.
+- `aero_drag.py`: Computes aerodynamic drag force based on fluid density, velocity, and drag coefficients across different vehicle profiles (e.g., Formula 1 vs. Standard Sedan).
 - `thermal_expansion.py`: Computes linear thermal expansion for mechanical materials using temperature variance and expansion coefficients.
 - `ema_filter.py`: A recursive weighted-average algorithm for real-time sensor noise reduction and signal smoothing.
 
@@ -41,9 +41,9 @@ Deconstructing software behavior and complex mechanics using non-linear threshol
 - `weapon_database.py`: A structured data model managing variable statistics for multiple assets.
 
 ## 📂 04_Robotics_Simulator
-A theoretical architecture and Object-Oriented skeleton for an autonomous robot navigation system.
-- `ARCHITECTURE.md`: High-level system design, PID control logic, and A* pathfinding roadmap.
-- `robot_core.py`: Foundational classes defining robot kinematics, environment mapping, and sensor fusion.
+Lightweight Python implementations of core robotics logic, extracted from practical national-level competition experience.
+- `ARCHITECTURE.md`: Documentation of functional sandbox goals and fundamental control concepts.
+- `robot_core.py`: Foundational classes defining 2-Wheel Differential Drive kinematics and real-time pose tracking (Odometry).
 
 ---
 
