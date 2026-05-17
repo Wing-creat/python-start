@@ -2,10 +2,22 @@
 
 def calculate_free_fall(time_seconds: float, gravity: float = 9.81) -> dict:
     """
-    Calculates the final velocity and total displacement of an object in free fall.
-    Assumes standard Earth gravity and a vacuum environment (no air resistance).
+    Calculates the kinematics of an object in free fall within a vacuum.
+    
+    Args:
+        time_seconds (float): Duration of the fall in seconds. Must be non-negative.
+        gravity (float): Gravitational acceleration (default: Earth 9.81 m/s^2).
+        
+    Returns:
+        dict: Contains final velocity (m/s) and total displacement (m).
+        
+    Raises:
+        ValueError: If time_seconds is negative.
     """
-    # Kinematics equations
+    if time_seconds < 0:
+        raise ValueError("Error: Time cannot be negative in classical kinematics.")
+        
+    # Standard kinematics equations
     velocity = gravity * time_seconds
     displacement = 0.5 * gravity * (time_seconds ** 2)
     
@@ -16,11 +28,19 @@ def calculate_free_fall(time_seconds: float, gravity: float = 9.81) -> dict:
     }
 
 if __name__ == "__main__":
-    print("--- 🌍 Physics Engine: Free Fall Simulation ---")
-    test_time = 5.0
-    results = calculate_free_fall(test_time)
+    print("=== 🌍 Physics Engine: Free Fall Simulation ===\n")
     
-    print(f"After {results['time_s']} seconds of free fall:")
-    print(f"  -> Speed: {results['velocity_m_s']} m/s")
-    print(f"  -> Dropped Distance: {results['displacement_m']} meters")
-    print("-" * 47)
+    # Test multiple scenarios instead of just one
+    test_scenarios = [1.0, 3.0, 10.0]
+    
+    for t in test_scenarios:
+        try:
+            results = calculate_free_fall(t)
+            print(f"Simulation: {results['time_s']} seconds of free fall")
+            print(f"  |- Final Speed:   {results['velocity_m_s']} m/s")
+            print(f"  |- Distance Fell: {results['displacement_m']} meters\n")
+        except ValueError as e:
+            print(f"Simulation failed: {e}\n")
+            
+    print("===============================================")
+    print("Status: Kinematics module executed successfully.")
