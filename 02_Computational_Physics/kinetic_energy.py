@@ -1,5 +1,8 @@
 # kinetic_energy.py
 
+# Constant: Speed of light in a vacuum (m/s)
+SPEED_OF_LIGHT = 299792458.0  
+
 def calculate_kinetic_energy(mass_kg: float, velocity_m_s: float) -> float:
     """
     Calculates the classical kinetic energy of a moving object.
@@ -8,12 +11,11 @@ def calculate_kinetic_energy(mass_kg: float, velocity_m_s: float) -> float:
     if mass_kg < 0:
         raise ValueError("Error: Mass cannot be negative.")
         
-    # Constant: Speed of light in a vacuum (m/s)
-    SPEED_OF_LIGHT = 299792458.0  
+    speed = abs(velocity_m_s)
     
-    if velocity_m_s > SPEED_OF_LIGHT:
+    if speed > SPEED_OF_LIGHT:
         raise ValueError("Error: Velocity cannot exceed the speed of light in a vacuum.")
-    elif velocity_m_s > 0.1 * SPEED_OF_LIGHT:
+    elif speed > 0.1 * SPEED_OF_LIGHT:
         # Trigger relativistic warning if velocity exceeds 10% of c
         print("  [!] System Warning: Velocity exceeds 10% of c. Classical mechanics may be inaccurate (Relativistic effects required).")
         
