@@ -1,7 +1,8 @@
 # projectile_sim.py
 import math
+from typing import Tuple
 
-def calculate_trajectory(v0: float, angle_degrees: float, gravity: float = 9.81):
+def calculate_trajectory(v0: float, angle_degrees: float, gravity: float = 9.81) -> Tuple[float, float, float]:
     """
     Calculates key kinematics metrics of a 2D projectile trajectory.
     """

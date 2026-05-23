@@ -1,5 +1,6 @@
 # plot_trajectory.py
 import math
+import os
 import matplotlib.pyplot as plt
 from typing import List
 
@@ -38,6 +39,7 @@ def plot_multiple_trajectories(v0: float, angles: List[float], gravity: float = 
     plt.grid(True, linestyle='--', alpha=0.6)
     plt.legend(loc="upper right", framealpha=0.9)
     
+    os.makedirs("assets", exist_ok=True)
     # Save directly to the assets folder so the README updates automatically!
     plt.savefig("assets/trajectory_visualization.png", dpi=300, bbox_inches='tight')
     print("✅ Multi-angle trajectory plot successfully saved to assets/!")
