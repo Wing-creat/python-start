@@ -1,21 +1,38 @@
 # spring_energy.py
 
-def calculate_elastic_potential_energy(spring_constant: float, displacement: float) -> float:
+def calculate_spring_energy(spring_constant_n_m: float, displacement_m: float) -> float:
     """
-    Calculates the elastic potential energy (U) stored in a compressed or stretched spring.
-    Formula: U = 1/2 * k * x^2
+    Calculates the elastic potential energy stored in a spring based on Hooke's Law.
+    Formula: E_p = 1/2 * k * x^2
     """
-    energy = 0.5 * spring_constant * (displacement ** 2)
-    return round(energy, 2)
+    if spring_constant_n_m <= 0:
+        raise ValueError("Error: Spring constant (k) must be strictly positive.")
+        
+    # The displacement can be negative (compression) or positive (extension)
+    # The energy stored will always be positive because of the square (x^2)
+    energy_joules = 0.5 * spring_constant_n_m * (displacement_m ** 2)
+    return energy_joules
 
 if __name__ == "__main__":
-    print("--- ⚙️ Physics Engine: Hooke's Law Simulation ---")
-    k = 500.0  # Spring constant (N/m) - Typical for a stiff mechanical spring
-    x = 0.15   # Displacement (meters) - Compressed by 15cm
+    print("=== 🏎️ Mechanical Engineering: Suspension Energy Simulator ===\n")
     
-    energy = calculate_elastic_potential_energy(k, x)
+    # Testing different mechanical scenarios (from toys to heavy vehicles)
+    spring_tests = [
+        {"type": "Clicky Pen Spring", "k": 100.0, "x": 0.01},           # 1 cm compression
+        {"type": "Mountain Bike Shock", "k": 40000.0, "x": 0.05},       # 5 cm compression
+        {"type": "G-Class SUV Suspension", "k": 120000.0, "x": 0.15}    # 15 cm heavy landing compression
+    ]
     
-    print(f"Spring Constant (k): {k} N/m")
-    print(f"Displacement (x): {x} m")
-    print(f"Stored Potential Energy: {energy} Joules")
-    print("-" * 50)
+    for test in spring_tests:
+        try:
+            energy = calculate_spring_energy(test["k"], test["x"])
+            print(f"Mechanical System: {test['type']}")
+            print(f"  |- Spring Constant (k): {test['k']} N/m")
+            print(f"  |- Displacement (x):    {test['x']} m")
+            # Elegant formatting with comma separators
+            print(f"  => Stored Energy:       {energy:,.2f} Joules\n")
+        except ValueError as e:
+            print(f"Simulation failed for {test['type']}: {e}\n")
+            
+    print("==============================================================")
+    print("Status: Hooke's Law calculations executed successfully.")
