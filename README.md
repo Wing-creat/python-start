@@ -1,60 +1,78 @@
-# Computational Physics & Engineering Sandbox
+# Python Start
 
-> A dedicated computational sandbox for modeling physical systems, developing engineering tools, and reverse-engineering complex mechanics. 
+This is a personal Python practice repository. I am preparing to study Engineering Physics, so many of the scripts are small exercises that connect programming with physics, numerical methods, units, and simple robotics ideas.
 
-## 👨‍💻 About This Repository
-I am an incoming Engineering Physics freshman, bridging the gap between practical hardware engineering and computational simulation. Having previously competed and secured the National Grand Prize in robotics, I am now translating that hands-on mechanical intuition into Python-based analytical models.
+The goal is not to build a large software project yet. Most files are short programs written to practice:
 
----
+- basic Python syntax and functions
+- using formulas in code
+- checking simple input errors
+- working with lists, dictionaries, and classes
+- plotting results with `matplotlib`
+- connecting code with physics and engineering examples
 
-## 📂 00_Archive_Basics
-Foundational algorithms, syntax, and computational logic (Legacy codebase).
-- `hello.py`: Initial environment configuration and testing.
-- `bounding_box.py`: A foundational computer vision utility for calculating target areas.
-- `cyber_oracle.py`: A logic flow exercise utilizing the `random` module and execution delays.
+## Repository Structure
 
-## 📂 01_Numerical_Methods
-Algorithms for solving mathematical models through numerical approximation.
-- `monte_carlo_pi.py`: Demonstrates the Monte Carlo statistical method to approximate Pi via randomized spatial distribution.
-- `plot_monte_carlo.py`: Scatter plot visualization of the Monte Carlo Pi estimation using matplotlib.
+### `00_Archive_Basics`
 
-## 📂 02_Computational_Physics
-Core mathematical scripts and simulators for evaluating physical phenomena.
-- `free_fall.py`: Multi-scenario kinematics simulator for objects in free fall, featuring robust exception handling.
-- `sensor_data.py`: Simulates noise filtering and averaging for ultrasonic sensor data arrays.
-- `plot_trajectory.py`: Data visualization mapping 2D projectile trajectory and kinematics using matplotlib.
-- `planet_weights.py`: An interactive universal gravitation calculator for comparative planetary mass.
-- `pendulum_period.py`: Period calculation for a simple pendulum.
-- `kinetic_energy.py`: Classical mechanics model evaluating standard kinetic energy with strict physical constraints and test scenarios.
-- `celestial_body.py`: An Object-Oriented Programming (OOP) model defining celestial objects to compute surface gravity.
-- `projectile_sim.py`: A 2D kinematics simulator tracking optimal trajectory based on velocity and launch angle.
-- `spring_energy.py`: Calculates elastic potential energy utilizing Hooke's Law.
-- `unit_converter.py`: An engineering utility for rapid conversion between imperial and metric measurement systems.
-- `aero_drag.py`: Computes aerodynamic drag force based on fluid density, velocity, and drag coefficients across different vehicle profiles (e.g., Formula 1 vs. Standard Sedan).
-- `thermal_expansion.py`: Computes linear thermal expansion for mechanical materials using temperature variance and expansion coefficients.
-- `ema_filter.py`: A recursive weighted-average algorithm for real-time sensor noise reduction and signal smoothing.
+Early Python practice files. These are simple scripts for getting used to variables, functions, printing output, random choices, and basic program flow.
 
-## 📂 03_Systems_Simulation
-Deconstructing software behavior and complex mechanics using non-linear thresholds.
-- `elden_ring_fall.py`: A threshold calculator simulating rigid fall-damage constraints based on specific altitude variables.
-- `boss_combat_log.py`: A data parsing script tracking sequential damage output using iterative arrays.
-- `weapon_database.py`: A structured data model managing variable statistics for multiple assets.
+- `hello.py`: First test script.
+- `bounding_box.py`: Calculates the area of a simple bounding box.
+- `cyber_oracle.py`: Small random-response program using `random` and `time`.
 
-## 📂 04_Robotics_Simulator
-Lightweight Python implementations of core robotics logic, extracted from practical national-level competition experience.
-- `ARCHITECTURE.md`: Documentation of functional sandbox goals and fundamental control concepts.
-- `robot_core.py`: Foundational classes defining 2-Wheel Differential Drive kinematics and real-time pose tracking (Odometry).
+### `01_Numerical_Methods`
 
----
+Small numerical method examples. These scripts are mainly about using computation to approximate or visualize mathematical ideas.
 
-## 📊 Example Outputs (Visualizations)
+- `monte_carlo_pi.py`: Estimates pi using random points.
+- `plot_monte_carlo.py`: Creates a scatter plot to show the Monte Carlo method visually.
 
-As part of the engineering process, raw computational data is visualized to verify physical models and statistical accuracy.
+### `02_Computational_Physics`
 
-### 1. Kinematics: 2D Projectile Trajectory
-Visualizing the optimal flight path based on initial velocity and launch angle limits.
+Physics-related practice scripts. Each file focuses on one formula, model, or engineering calculation.
+
+- `free_fall.py`: Calculates velocity and displacement during ideal free fall.
+- `projectile_sim.py`: Computes basic projectile motion values.
+- `plot_trajectory.py`: Plots several projectile trajectories.
+- `kinetic_energy.py`: Calculates classical kinetic energy.
+- `spring_energy.py`: Calculates elastic potential energy in a spring.
+- `pendulum_period.py`: Calculates the period of a simple pendulum.
+- `planet_weights.py`: Compares weight on different celestial bodies.
+- `celestial_body.py`: Uses a simple class to model planets and surface gravity.
+- `sensor_data.py`: Simulates noisy sensor readings and applies a moving average.
+- `ema_filter.py`: Applies an exponential moving average filter.
+- `unit_converter.py`: Converts several common engineering units.
+- `aero_drag.py`: Calculates aerodynamic drag force.
+- `thermal_expansion.py`: Calculates linear thermal expansion.
+
+### `03_Systems_Simulation`
+
+Small simulations using game-like examples. These files are less formal physics models, but they are useful for practicing conditions, loops, dictionaries, and simple rule systems.
+
+- `elden_ring_fall.py`: Uses height thresholds to model fall damage.
+- `boss_combat_log.py`: Tracks damage values across several hits.
+- `weapon_database.py`: Stores and looks up weapon data with dictionaries.
+
+### `04_Robotics_Simulator`
+
+Basic robotics-related code based on ideas I have encountered through robotics practice and competitions.
+
+- `robot_core.py`: Models a simple two-wheel differential drive robot and updates its position over time.
+- `ARCHITECTURE.md`: Notes about the purpose of the robotics simulation folder.
+
+## Example Outputs
+
+Some scripts generate plots so the results are easier to understand visually.
+
+### Projectile Trajectory
+
 ![Projectile Trajectory](assets/trajectory_visualization.png)
 
-### 2. Statistics: Monte Carlo Pi Estimation
-A scatter plot demonstrating the random spatial distribution used to approximate Pi.
+### Monte Carlo Pi
+
 ![Monte Carlo Pi](assets/monte_carlo_visualization.png)
+
+## Notes
+
+This repository is mainly a learning record. I expect the code style and structure to improve over time as I learn more Python, physics, and engineering tools.
