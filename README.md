@@ -59,6 +59,7 @@ Small simulations using game-like examples. These files are less formal physics 
 Basic robotics-related code based on ideas I have encountered through robotics practice and competitions.
 
 - `robot_core.py`: Models a simple two-wheel differential drive robot and updates its position over time.
+- `two_dof_arm_torque.py`: Simulates the base joint torque of a 2-DOF robotic arm carrying a 5kg payload.
 - `ARCHITECTURE.md`: Notes about the purpose of the robotics simulation folder.
 
 ## Example Outputs
@@ -72,6 +73,10 @@ Some scripts generate plots so the results are easier to understand visually.
 ### Monte Carlo Pi
 
 ![Monte Carlo Pi](assets/monte_carlo_visualization.png)
+
+### 2-DOF Arm Base Torque
+
+![2-DOF Arm Base Torque](assets/arm_base_torque_curve.png)
 
 ## Notes
 

@@ -11,7 +11,12 @@ Instead of a complex, full-scale system, these scripts serve as a functional san
 - **Logic:** Translating independent wheel velocities into real-time pose tracking (Odometry).
 - **Physics:** Utilizing linear and angular velocity integration for 2D position estimation.
 
-### 2. Signal Processing (`../02_Computational_Physics/ema_filter.py`)
+### 2. Arm Torque Simulation (`two_dof_arm_torque.py`)
+- **Model:** Simple 2-DOF robotic arm with two links and a 5kg payload.
+- **Logic:** Calculates the base joint torque while the arm moves from 0 to 90 degrees.
+- **Physics:** Uses gravitational torque, based on each mass and its horizontal distance from the base joint.
+
+### 3. Signal Processing (`../02_Computational_Physics/ema_filter.py`)
 - **Algorithm:** Exponential Moving Average (EMA).
 - **Logic:** Real-time smoothing of noisy sensor data (e.g., ultrasonic or encoder readings).
 - **Application:** Low-latency filtering crucial for high-speed obstacle avoidance.
