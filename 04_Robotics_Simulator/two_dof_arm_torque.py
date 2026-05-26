@@ -6,7 +6,6 @@ os.environ.setdefault("MPLCONFIGDIR", os.path.join(os.getcwd(), ".matplotlib_cac
 import matplotlib
 
 matplotlib.use("Agg")
-
 import matplotlib.pyplot as plt
 
 
@@ -50,6 +49,7 @@ if __name__ == "__main__":
 
     os.makedirs("assets", exist_ok=True)
     plt.savefig("assets/arm_base_torque_curve.png", dpi=300, bbox_inches="tight")
+    plt.close()
 
     print(f"Payload mass: {PAYLOAD_MASS} kg")
     print(f"Maximum base torque: {max(torques):.2f} N*m")
