@@ -1,15 +1,15 @@
-# 🤖 Robotics Simulator: Logic Fragments
+# Robotics Simulator: Logic Fragments
 
-This directory contains lightweight Python implementations of core robotics logic, extracted from my practical experience in national-level robotics competitions. 
+This directory contains lightweight Python implementations of basic robotics ideas, based on concepts I have used or encountered through robotics practice and competitions.
 
-Instead of a complex, full-scale system, these scripts serve as a functional sandbox to verify fundamental mechanical and control concepts before hardware implementation.
+This is not meant to be a complete robotics software stack. It is a small practice space for checking simple mechanical, physics, and control ideas in Python before thinking about real hardware.
 
-## 📂 Core Components
+## Core Components
 
 ### 1. Robot Kinematics (`robot_core.py`)
-- **Model:** 2-Wheel Differential Drive (The standard for most competition bots).
-- **Logic:** Translating independent wheel velocities into real-time pose tracking (Odometry).
-- **Physics:** Utilizing linear and angular velocity integration for 2D position estimation.
+- **Model:** 2-wheel differential drive robot.
+- **Logic:** Converts left and right wheel speeds into robot position updates.
+- **Physics:** Uses simple linear and angular velocity ideas for 2D motion.
 
 ### 2. Arm Torque Simulation (`two_dof_arm_torque.py`)
 - **Model:** Simple 2-DOF robotic arm with two links and a 5kg payload.
@@ -18,10 +18,10 @@ Instead of a complex, full-scale system, these scripts serve as a functional san
 
 ### 3. Signal Processing (`../02_Computational_Physics/ema_filter.py`)
 - **Algorithm:** Exponential Moving Average (EMA).
-- **Logic:** Real-time smoothing of noisy sensor data (e.g., ultrasonic or encoder readings).
-- **Application:** Low-latency filtering crucial for high-speed obstacle avoidance.
+- **Logic:** Smooths noisy sensor data, such as distance or encoder readings.
+- **Application:** A simple first step toward cleaner robot sensor measurements.
 
-## 🎯 Project Goals
-- Maintain a modular library of competition-tested logic.
-- Bridge the gap between mechanical hardware design and firmware control.
-- Verify mathematical models in a risk-free software environment.
+## Project Goals
+- Practice turning robotics formulas into small Python programs.
+- Connect mechanics, sensors, and motion with code.
+- Keep the examples understandable for early engineering physics study.

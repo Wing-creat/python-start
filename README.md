@@ -64,6 +64,31 @@ Basic robotics-related code based on ideas I have encountered through robotics p
 - `two_dof_arm_torque.py`: Simulates the base joint torque of a 2-DOF robotic arm carrying a 5kg payload.
 - `ARCHITECTURE.md`: Notes about the purpose of the robotics simulation folder.
 
+## Requirements
+
+Most scripts only use standard Python. A few plotting and simulation files use:
+
+- `matplotlib`
+- `numpy`
+
+Install the extra packages with:
+
+```bash
+pip install -r requirements.txt
+```
+
+## How to Run
+
+Run any script from the repository root with Python:
+
+```bash
+python3 02_Computational_Physics/rc_circuit_sim.py
+python3 01_Numerical_Methods/monte_carlo_pi.py
+python3 04_Robotics_Simulator/robot_core.py
+```
+
+Some files print numerical results in the terminal. Others create plots to make the physics or numerical method easier to see.
+
 ## Example Outputs
 
 Some scripts generate plots so the results are easier to understand visually.
