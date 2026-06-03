@@ -45,6 +45,8 @@ Physics-related practice scripts. Each file focuses on one formula, model, or en
 - `unit_converter.py`: Converts several common engineering units.
 - `aero_drag.py`: Calculates aerodynamic drag force.
 - `thermal_expansion.py`: Calculates linear thermal expansion.
+- `gear_train_calc.py`: Calculates speed and torque through a compound gear train.
+- `rc_circuit_sim.py`: Simulates capacitor charging and discharging in a simple RC circuit.
 
 ### `03_Systems_Simulation`
 
