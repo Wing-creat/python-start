@@ -66,7 +66,7 @@ Basic robotics-related code based on ideas I have encountered through robotics p
 
 ## Requirements
 
-Most scripts only use standard Python. A few plotting and simulation files use:
+Most scripts only use standard Python 3. A few plotting and simulation files use:
 
 - `matplotlib`
 - `numpy`
@@ -79,7 +79,7 @@ pip install -r requirements.txt
 
 ## How to Run
 
-Run any script from the repository root with Python:
+Run scripts from the repository root with Python so file paths like `assets/` work correctly:
 
 ```bash
 python3 02_Computational_Physics/rc_circuit_sim.py
