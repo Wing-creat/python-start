@@ -7,11 +7,12 @@ from typing import List
 def plot_multiple_trajectories(v0: float, angles: List[float], gravity: float = 9.81):
     """
     Visualizes multiple 2D projectile trajectories to compare launch angles.
+
     Saves the output directly to the assets folder.
     """
     plt.figure(figsize=(10, 6))
     
-    # Define a cool color palette for the lines
+    # Use a small color palette so each launch angle is easy to compare.
     colors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd']
     
     for i, angle_degrees in enumerate(angles):
@@ -26,7 +27,6 @@ def plot_multiple_trajectories(v0: float, angles: List[float], gravity: float = 
         max_range = max(x_vals)
         max_height = max(y_vals)
         
-        # Plot each trajectory with a detailed label
         plt.plot(x_vals, y_vals, 
                  label=f'{angle_degrees}° (Range: {max_range:.1f}m, Height: {max_height:.1f}m)', 
                  color=colors[i % len(colors)], linewidth=2.5, alpha=0.8)
@@ -40,12 +40,11 @@ def plot_multiple_trajectories(v0: float, angles: List[float], gravity: float = 
     plt.legend(loc="upper right", framealpha=0.9)
     
     os.makedirs("assets", exist_ok=True)
-    # Save directly to the assets folder so the README updates automatically!
+
     plt.savefig("assets/trajectory_visualization.png", dpi=300, bbox_inches='tight')
-    print("✅ Multi-angle trajectory plot successfully saved to assets/!")
+    print("Multi-angle trajectory plot saved to assets/trajectory_visualization.png")
 
 if __name__ == "__main__":
-    print("--- 🚀 Initializing Advanced Trajectory Visualization ---")
-    # Testing multiple angles at once!
+    print("--- Projectile Trajectory Visualization ---")
     test_angles = [30.0, 45.0, 60.0, 75.0]
     plot_multiple_trajectories(v0=50.0, angles=test_angles)
