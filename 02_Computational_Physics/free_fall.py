@@ -12,12 +12,13 @@ def calculate_free_fall(time_seconds: float, gravity: float = 9.81) -> dict:
         dict: Contains final velocity (m/s) and total displacement (m).
         
     Raises:
-        ValueError: If time_seconds is negative.
+        ValueError: If time_seconds is negative or gravity is not positive.
     """
     if time_seconds < 0:
         raise ValueError("Error: Time cannot be negative in classical kinematics.")
+    if gravity <= 0:
+        raise ValueError("Error: Gravity must be positive.")
         
-    # Standard kinematics equations
     velocity = gravity * time_seconds
     displacement = 0.5 * gravity * (time_seconds ** 2)
     
@@ -28,9 +29,8 @@ def calculate_free_fall(time_seconds: float, gravity: float = 9.81) -> dict:
     }
 
 if __name__ == "__main__":
-    print("=== 🌍 Physics Engine: Free Fall Simulation ===\n")
+    print("=== Free Fall Calculator ===\n")
     
-    # Test multiple scenarios instead of just one
     test_scenarios = [1.0, 3.0, 10.0]
     
     for t in test_scenarios:
@@ -43,4 +43,4 @@ if __name__ == "__main__":
             print(f"Simulation failed: {e}\n")
             
     print("===============================================")
-    print("Status: Kinematics module executed successfully.")
+    print("Status: Free fall calculations complete.")

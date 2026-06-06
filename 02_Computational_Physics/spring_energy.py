@@ -3,6 +3,7 @@
 def calculate_spring_energy(spring_constant_n_m: float, displacement_m: float) -> float:
     """
     Calculates the elastic potential energy stored in a spring based on Hooke's Law.
+
     Formula: E_p = 1/2 * k * x^2
     """
     if spring_constant_n_m <= 0:
@@ -14,13 +15,13 @@ def calculate_spring_energy(spring_constant_n_m: float, displacement_m: float) -
     return energy_joules
 
 if __name__ == "__main__":
-    print("=== 🏎️ Mechanical Engineering: Suspension Energy Simulator ===\n")
+    print("=== Spring Energy Calculator ===\n")
     
-    # Testing different mechanical scenarios (from toys to heavy vehicles)
+    # A few simple examples with different spring stiffness values.
     spring_tests = [
         {"type": "Clicky Pen Spring", "k": 100.0, "x": 0.01},           # 1 cm compression
         {"type": "Mountain Bike Shock", "k": 40000.0, "x": 0.05},       # 5 cm compression
-        {"type": "G-Class SUV Suspension", "k": 120000.0, "x": 0.15}    # 15 cm heavy landing compression
+        {"type": "Vehicle Suspension Spring", "k": 120000.0, "x": 0.15}, # 15 cm compression
     ]
     
     for test in spring_tests:
@@ -29,10 +30,9 @@ if __name__ == "__main__":
             print(f"Mechanical System: {test['type']}")
             print(f"  |- Spring Constant (k): {test['k']} N/m")
             print(f"  |- Displacement (x):    {test['x']} m")
-            # Elegant formatting with comma separators
             print(f"  => Stored Energy:       {energy:,.2f} Joules\n")
         except ValueError as e:
             print(f"Simulation failed for {test['type']}: {e}\n")
             
     print("==============================================================")
-    print("Status: Hooke's Law calculations executed successfully.")
+    print("Status: Spring energy calculations complete.")
