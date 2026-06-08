@@ -1,4 +1,5 @@
 # plot_monte_carlo.py
+import os
 import random
 import matplotlib.pyplot as plt
 
@@ -18,7 +19,6 @@ def visualize_monte_carlo(num_samples: int = 2000):
             outside_x.append(x)
             outside_y.append(y)
             
-    # Plotting logic
     plt.figure(figsize=(6, 6))
     plt.scatter(inside_x, inside_y, color='blue', s=3, label='Inside Quarter-Circle')
     plt.scatter(outside_x, outside_y, color='red', s=3, label='Outside Quarter-Circle')
@@ -29,10 +29,10 @@ def visualize_monte_carlo(num_samples: int = 2000):
     plt.legend(loc="upper right")
     plt.grid(True, linestyle='--', alpha=0.5)
     
-    # Save the plot
-    plt.savefig("monte_carlo_visualization.png", dpi=300)
-    print(f"✅ Monte Carlo visualization ({num_samples} points) saved as 'monte_carlo_visualization.png'!")
+    os.makedirs("assets", exist_ok=True)
+    plt.savefig("assets/monte_carlo_visualization.png", dpi=300)
+    print(f"Monte Carlo visualization saved to assets/monte_carlo_visualization.png ({num_samples} points)")
 
 if __name__ == "__main__":
-    print("--- 🎲 Initializing Monte Carlo Scatter Plot ---")
+    print("--- Monte Carlo Scatter Plot ---")
     visualize_monte_carlo()
