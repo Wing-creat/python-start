@@ -66,10 +66,9 @@ Basic robotics-related code based on ideas I have encountered through robotics p
 
 ## Requirements
 
-Most scripts only use standard Python 3. A few plotting and simulation files use:
+Most scripts only use standard Python 3. A few plotting files use:
 
 - `matplotlib`
-- `numpy`
 
 Install the extra packages with:
 
