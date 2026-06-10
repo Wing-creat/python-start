@@ -4,35 +4,37 @@ import math
 def calculate_pendulum_period(length_m: float, gravity_m_s2: float = 9.81) -> float:
     """
     Calculates the period of a simple ideal pendulum.
+
+    Assumes small-angle motion, so the period depends mainly on length and gravity.
     Formula: T = 2 * pi * sqrt(L / g)
     
     Args:
-        length_m (float): Length of the pendulum string in meters.
+        length_m (float): Length of the pendulum string in meters (must be > 0).
         gravity_m_s2 (float): Local acceleration due to gravity (must be > 0).
         
     Returns:
         float: The time period of one full swing (oscillation) in seconds.
     """
-    if length_m < 0:
-        raise ValueError("Error: Pendulum length cannot be negative.")
+    if length_m <= 0:
+        raise ValueError("Error: Pendulum length must be positive.")
     if gravity_m_s2 <= 0:
-        raise ValueError("Error: Gravity must be strictly positive to maintain oscillation.")
+        raise ValueError("Error: Gravity must be positive.")
         
     period_seconds = 2 * math.pi * math.sqrt(length_m / gravity_m_s2)
     return period_seconds
 
 if __name__ == "__main__":
-    print("=== ⏱️ Physics Engine: Simple Pendulum Simulator ===\n")
+    print("=== Simple Pendulum Period Calculator ===\n")
     
     # Standard pendulum length (1 meter)
     test_length = 1.0
     print(f"Pendulum Length: {test_length} meter(s)\n")
     
-    # Testing across different celestial environments
+    # Compare the same pendulum under different surface gravity values.
     environments = [
         {"body": "Earth", "g": 9.81},
         {"body": "Moon",  "g": 1.62},
-        {"body": "Jupiter", "g": 24.79}
+        {"body": "Jupiter", "g": 24.79},
     ]
     
     for env in environments:
@@ -45,4 +47,4 @@ if __name__ == "__main__":
             print(f"Simulation failed for {env['body']}: {e}\n")
             
     print("==================================================")
-    print("Status: Kinematic oscillation calculated successfully.")
+    print("Status: Pendulum period calculations complete.")
