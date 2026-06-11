@@ -19,21 +19,19 @@ def calculate_offworld_weight(mass_kg: float) -> dict:
         "Earth": 9.81,
         "Moon": 1.62,
         "Mars": 3.71,
-        "Jupiter": 24.79
+        "Jupiter": 24.79,
     }
     
     weights = {}
     for planet, g in surface_gravity.items():
-        # W = m * g
         weights[planet] = round(mass_kg * g, 2)
         
     return weights
 
 if __name__ == "__main__":
-    print("=== 🚀 Aerospace Engineering: Celestial Weight Calculator ===\n")
+    print("=== Planet Weight Calculator ===\n")
     
-    # Let's test with a standard mass (e.g., a 75kg astronaut or rover)
-    test_mass = 85.0 
+    test_mass = 85.0
     
     print(f"Target Mass: {test_mass} kg\n")
     
@@ -45,4 +43,4 @@ if __name__ == "__main__":
         print(f"Simulation failed: {e}")
         
     print("\n=============================================================")
-    print("Status: Gravitational calculations executed successfully.")
+    print("Status: Weight calculations complete.")
