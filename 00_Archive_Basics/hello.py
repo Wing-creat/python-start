@@ -1,5 +1,5 @@
 print("Hello, GitHub!")
-print("My name is Lao Wei.")
+print("My name is Zhihao Wei.")
 print("I am an incoming Engineering Physics student at University of the Pacific.")
 print("I am grateful to study with a scholarship that covers most of my tuition.")
 print("This repository is where I start practicing Python for physics and engineering.")
