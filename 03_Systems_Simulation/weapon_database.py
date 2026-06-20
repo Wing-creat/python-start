@@ -3,8 +3,7 @@
 def manage_weapons():
     print("--- 🏺 Grand Library Weapon Database ---")
 
-    # A dictionary where keys are weapon names and values are stats dictionaries
-    # This is a common way to store configuration data in engineering
+    # Store each weapon's stats in a nested dictionary.
     weapons = {
         "Moonveil": {
             "type": "Katana",
