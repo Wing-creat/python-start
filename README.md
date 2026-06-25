@@ -20,6 +20,7 @@ Early Python practice files. These are simple scripts for getting used to variab
 - `hello.py`: First test script.
 - `bounding_box.py`: Calculates the area of a simple bounding box.
 - `cyber_oracle.py`: Small random-response program using `random` and `time`.
+- `eighteen_reflection.py`: Short birthday reflection script using variables, a list, and a loop.
 
 ### `01_Numerical_Methods`
 
