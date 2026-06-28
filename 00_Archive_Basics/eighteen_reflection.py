@@ -2,6 +2,7 @@
 
 name = "Zhihao Wei"
 age = 18
+birth_date = "2008.06.25"
 next_step = "Engineering Physics at University of the Pacific"
 
 goals = [
@@ -18,6 +19,7 @@ things_to_remember = [
 ]
 
 print(f"{name} is {age} today.")
+print(f"Birth date: {birth_date}")
 print(f"Next step: {next_step}\n")
 
 print("Small goals for the next chapter:")
