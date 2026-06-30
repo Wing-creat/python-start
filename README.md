@@ -17,7 +17,7 @@ The goal is not to build a large software project yet. Most files are short prog
 
 Early Python practice files. These are simple scripts for getting used to variables, functions, printing output, random choices, and basic program flow.
 
-- `hello.py`: First test script.
+- `hello.py`: Introduces the repository and my Engineering Physics learning direction.
 - `bounding_box.py`: Calculates the area of a simple bounding box.
 - `cyber_oracle.py`: Small random-response program using `random` and `time`.
 - `eighteen_reflection.py`: Short 18th birthday reflection script using variables, a list, and a loop.
