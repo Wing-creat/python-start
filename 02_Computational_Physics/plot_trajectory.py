@@ -1,8 +1,10 @@
 # plot_trajectory.py
-import math
 import os
 import matplotlib.pyplot as plt
 from typing import List
+
+from projectile_sim import simulate_vacuum_trajectory
+
 
 def plot_multiple_trajectories(v0: float, angles: List[float], gravity: float = 9.81):
     """
@@ -16,16 +18,11 @@ def plot_multiple_trajectories(v0: float, angles: List[float], gravity: float = 
     colors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd']
     
     for i, angle_degrees in enumerate(angles):
-        angle_radians = math.radians(angle_degrees)
-        time_of_flight = (2 * v0 * math.sin(angle_radians)) / gravity
-        
-        # Generate 100 data points for smooth curves
-        times = [t * (time_of_flight / 100) for t in range(101)]
-        x_vals = [v0 * math.cos(angle_radians) * t for t in times]
-        y_vals = [v0 * math.sin(angle_radians) * t - 0.5 * gravity * (t**2) for t in times]
-        
-        max_range = max(x_vals)
-        max_height = max(y_vals)
+        trajectory = simulate_vacuum_trajectory(v0, angle_degrees, gravity)
+        x_vals = trajectory["x_positions"]
+        y_vals = trajectory["y_positions"]
+        max_range = trajectory["range"]
+        max_height = trajectory["max_height"]
         
         plt.plot(x_vals, y_vals, 
                  label=f'{angle_degrees}° (Range: {max_range:.1f}m, Height: {max_height:.1f}m)', 
