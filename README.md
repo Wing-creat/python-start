@@ -34,8 +34,10 @@ Small numerical method examples. These scripts are mainly about using computatio
 Physics-related practice scripts. Each file focuses on one formula, model, or engineering calculation.
 
 - `free_fall.py`: Calculates velocity and displacement during ideal free fall.
-- `projectile_sim.py`: Computes basic projectile motion values.
-- `plot_trajectory.py`: Plots several projectile trajectories.
+- `projectile_sim.py`: Returns an analytical projectile trajectory without air resistance.
+- `projectile_drag.py`: Uses RK4 to simulate projectile motion with quadratic air resistance.
+- `compare_projectile_models.py`: Compares the vacuum and air-drag models in a table and plot.
+- `plot_trajectory.py`: Plots several ideal projectile trajectories.
 - `kinetic_energy.py`: Calculates classical kinetic energy.
 - `spring_energy.py`: Calculates elastic potential energy in a spring.
 - `pendulum_period.py`: Calculates the period of a simple pendulum.
@@ -89,6 +91,52 @@ python3 04_Robotics_Simulator/robot_core.py
 
 Some files print numerical results in the terminal. Others create plots to make the physics or numerical method easier to see.
 
+## Projectile Air-Drag Study
+
+This small study compares two models for a projectile launched from ground level:
+
+- An analytical vacuum model that ignores air resistance.
+- A numerical model with quadratic air resistance, solved using the fourth-order Runge-Kutta (RK4) method.
+
+The drag-force vector is modeled as:
+
+```text
+F_drag = -0.5 * rho * C_d * A * |v| * v
+```
+
+Here, `rho` is air density, `C_d` is the drag coefficient, `A` is cross-sectional area, and `v` is the velocity vector. The negative sign means that drag acts opposite to the direction of motion.
+
+The example uses a roughly baseball-sized projectile. These are simulation parameters rather than measurements from a physical experiment:
+
+- Initial speed: `50.0 m/s`
+- Launch angle: `45 degrees`
+- Mass: `0.145 kg`
+- Drag coefficient: `0.47`
+- Cross-sectional area: `0.0042 m^2`
+- Air density: `1.225 kg/m^3`
+- RK4 time step: `0.01 s`
+
+Run the comparison from the repository root:
+
+```bash
+python3 02_Computational_Physics/compare_projectile_models.py
+```
+
+The simulation produces these results:
+
+| Model | Flight Time (s) | Maximum Height (m) | Range (m) |
+| --- | ---: | ---: | ---: |
+| Vacuum | 7.21 | 63.71 | 254.84 |
+| Quadratic drag | 5.46 | 37.17 | 107.24 |
+
+For these parameters, air resistance reduces the range by about 58% and the maximum height by about 42%. This illustrates why the ideal vacuum equations can strongly overestimate real projectile motion at higher speeds.
+
+Run the model checks with:
+
+```bash
+python3 -m unittest discover -s tests -v
+```
+
 ## Example Outputs
 
 Some scripts generate plots so the results are easier to understand visually.
@@ -96,6 +144,10 @@ Some scripts generate plots so the results are easier to understand visually.
 ### Projectile Trajectory
 
 ![Projectile Trajectory](assets/trajectory_visualization.png)
+
+### Projectile Air-Drag Comparison
+
+![Projectile Air-Drag Comparison](assets/projectile_drag_comparison.png)
 
 ### Monte Carlo Pi
 
