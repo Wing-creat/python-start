@@ -28,6 +28,7 @@ Small numerical method examples. These scripts are mainly about using computatio
 
 - `monte_carlo_pi.py`: Estimates pi using random points.
 - `plot_monte_carlo.py`: Creates a scatter plot to show the Monte Carlo method visually.
+- `random_walk_diffusion.py`: Simulates 2D random walks and compares diffusion with theory.
 
 ### `02_Computational_Physics`
 
@@ -86,10 +87,43 @@ Run scripts from the repository root with Python so file paths like `assets/` wo
 ```bash
 python3 02_Computational_Physics/rc_circuit_sim.py
 python3 01_Numerical_Methods/monte_carlo_pi.py
+python3 01_Numerical_Methods/random_walk_diffusion.py
 python3 04_Robotics_Simulator/robot_core.py
 ```
 
 Some files print numerical results in the terminal. Others create plots to make the physics or numerical method easier to see.
+
+Run all automated checks with:
+
+```bash
+python3 -m unittest discover -s tests -v
+```
+
+## Random-Walk Diffusion Study
+
+This experiment models diffusion using many independent particles. Each particle starts at the origin and moves a fixed distance in a random direction during every step.
+
+The mean-square displacement (MSD) measures how far the group spreads from its starting point:
+
+```text
+MSD = average(x^2 + y^2)
+```
+
+For an ideal two-dimensional random walk with step length `l`, the expected relationship is:
+
+```text
+MSD = N * l^2
+```
+
+Here, `N` is the number of steps. The example uses 600 walkers, 300 steps per walker, a step length of `0.5`, and random seed `42`. The fixed seed makes the learning example reproducible.
+
+Run the experiment from the repository root:
+
+```bash
+python3 01_Numerical_Methods/random_walk_diffusion.py
+```
+
+The final simulated MSD is `78.58`, compared with the theoretical value `75.00`, giving a relative error of about `4.78%`. The small difference is expected because the simulation uses a finite number of random walkers. Increasing the number of walkers would usually make the simulated curve smoother and closer to the theoretical average.
 
 ## Projectile Air-Drag Study
 
@@ -131,12 +165,6 @@ The simulation produces these results:
 
 For these parameters, air resistance reduces the range by about 58% and the maximum height by about 42%. This illustrates why the ideal vacuum equations can strongly overestimate real projectile motion at higher speeds.
 
-Run the model checks with:
-
-```bash
-python3 -m unittest discover -s tests -v
-```
-
 ## Example Outputs
 
 Some scripts generate plots so the results are easier to understand visually.
@@ -152,6 +180,10 @@ Some scripts generate plots so the results are easier to understand visually.
 ### Monte Carlo Pi
 
 ![Monte Carlo Pi](assets/monte_carlo_visualization.png)
+
+### Random-Walk Diffusion
+
+![Random-Walk Diffusion](assets/random_walk_diffusion.png)
 
 ### 2-DOF Arm Base Torque
 
