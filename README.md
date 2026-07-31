@@ -66,6 +66,7 @@ Basic robotics-related code based on ideas I have encountered through robotics p
 
 - `robot_core.py`: Models a simple two-wheel differential drive robot and updates its position over time.
 - `two_dof_arm_torque.py`: Simulates the base joint torque of a 2-DOF robotic arm carrying a 5kg payload.
+- `two_link_arm_workspace.py`: Visualizes the reachable area of a two-link planar arm.
 - `ARCHITECTURE.md`: Notes about the purpose of the robotics simulation folder.
 
 ## Requirements
@@ -89,6 +90,7 @@ python3 02_Computational_Physics/rc_circuit_sim.py
 python3 01_Numerical_Methods/monte_carlo_pi.py
 python3 01_Numerical_Methods/random_walk_diffusion.py
 python3 04_Robotics_Simulator/robot_core.py
+python3 04_Robotics_Simulator/two_link_arm_workspace.py
 ```
 
 Some files print numerical results in the terminal. Others create plots to make the physics or numerical method easier to see.
@@ -165,6 +167,30 @@ The simulation produces these results:
 
 For these parameters, air resistance reduces the range by about 58% and the maximum height by about 42%. This illustrates why the ideal vacuum equations can strongly overestimate real projectile motion at higher speeds.
 
+## Two-Link Arm Workspace Study
+
+This example uses forward kinematics to calculate the end-effector position of a planar robotic arm:
+
+```text
+x = L1 * cos(theta1) + L2 * cos(theta1 + theta2)
+y = L1 * sin(theta1) + L2 * sin(theta1 + theta2)
+```
+
+The two link lengths are `0.45 m` and `0.35 m`. Both joints are sampled from `-180` to `180` degrees, producing 5,329 arm configurations. With unrestricted joint rotation, the theoretical reach is between:
+
+```text
+minimum reach = |L1 - L2| = 0.10 m
+maximum reach =  L1 + L2  = 0.80 m
+```
+
+Run the workspace visualization from the repository root:
+
+```bash
+python3 04_Robotics_Simulator/two_link_arm_workspace.py
+```
+
+The empty center of the plot is physically meaningful: the arm cannot reach closer than the difference between its two link lengths without changing the mechanism.
+
 ## Example Outputs
 
 Some scripts generate plots so the results are easier to understand visually.
@@ -188,6 +214,10 @@ Some scripts generate plots so the results are easier to understand visually.
 ### 2-DOF Arm Base Torque
 
 ![2-DOF Arm Base Torque](assets/arm_base_torque_curve.png)
+
+### Two-Link Arm Workspace
+
+![Two-Link Arm Workspace](assets/two_link_arm_workspace.png)
 
 ## Notes
 

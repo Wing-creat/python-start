@@ -16,7 +16,12 @@ This is not meant to be a complete robotics software stack. It is a small practi
 - **Logic:** Calculates the base joint torque while the arm moves from 0 to 90 degrees.
 - **Physics:** Uses gravitational torque, based on each mass and its horizontal distance from the base joint.
 
-### 3. Signal Processing (`../02_Computational_Physics/ema_filter.py`)
+### 3. Arm Workspace (`two_link_arm_workspace.py`)
+- **Model:** Two-link planar robotic arm with unrestricted joint rotation.
+- **Logic:** Uses forward kinematics to calculate reachable end-effector positions.
+- **Physics:** Shows how link lengths define the minimum and maximum reach.
+
+### 4. Signal Processing (`../02_Computational_Physics/ema_filter.py`)
 - **Algorithm:** Exponential Moving Average (EMA).
 - **Logic:** Smooths noisy sensor data, such as distance or encoder readings.
 - **Application:** A simple first step toward cleaner robot sensor measurements.
