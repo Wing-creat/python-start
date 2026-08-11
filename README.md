@@ -46,6 +46,7 @@ Physics-related practice scripts. Each file focuses on one formula, model, or en
 - `celestial_body.py`: Uses a simple class to model planets and surface gravity.
 - `sensor_data.py`: Simulates noisy sensor readings and applies a moving average.
 - `ema_filter.py`: Applies an exponential moving average filter.
+- `compare_sensor_filters.py`: Compares noisy data, a moving average, and an EMA.
 - `unit_converter.py`: Converts several common engineering units.
 - `aero_drag.py`: Calculates aerodynamic drag force.
 - `thermal_expansion.py`: Calculates linear thermal expansion.
@@ -87,6 +88,7 @@ Run scripts from the repository root with Python so file paths like `assets/` wo
 
 ```bash
 python3 02_Computational_Physics/rc_circuit_sim.py
+python3 02_Computational_Physics/compare_sensor_filters.py
 python3 01_Numerical_Methods/monte_carlo_pi.py
 python3 01_Numerical_Methods/random_walk_diffusion.py
 python3 04_Robotics_Simulator/robot_core.py
@@ -191,6 +193,21 @@ python3 04_Robotics_Simulator/two_link_arm_workspace.py
 
 The empty center of the plot is physically meaningful: the arm cannot reach closer than the difference between its two link lengths without changing the mechanism.
 
+## Sensor Filter Comparison
+
+This example simulates a distance sensor while a robot moves between three distances from a wall. It compares the raw readings with two simple filters:
+
+- A moving average that averages the latest five readings.
+- An exponential moving average (EMA) that gives 35% weight to each new reading.
+
+Run the comparison from the repository root:
+
+```bash
+python3 02_Computational_Physics/compare_sensor_filters.py
+```
+
+With the fixed example data, the mean absolute error decreases from `0.392 m` for the raw sensor to `0.297 m` for the moving average and `0.289 m` for the EMA. The graph also shows the tradeoff: filtering reduces random noise, but filtered values take longer to follow a sudden distance change.
+
 ## Example Outputs
 
 Some scripts generate plots so the results are easier to understand visually.
@@ -218,6 +235,10 @@ Some scripts generate plots so the results are easier to understand visually.
 ### Two-Link Arm Workspace
 
 ![Two-Link Arm Workspace](assets/two_link_arm_workspace.png)
+
+### Sensor Filter Comparison
+
+![Sensor Filter Comparison](assets/sensor_filter_comparison.png)
 
 ## Notes
 
