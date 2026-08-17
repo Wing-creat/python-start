@@ -35,6 +35,7 @@ Small numerical method examples. These scripts are mainly about using computatio
 Physics-related practice scripts. Each file focuses on one formula, model, or engineering calculation.
 
 - `free_fall.py`: Calculates velocity and displacement during ideal free fall.
+- `bouncing_ball.py`: Simulates repeated bounces with simple energy loss.
 - `projectile_sim.py`: Returns an analytical projectile trajectory without air resistance.
 - `projectile_drag.py`: Uses RK4 to simulate projectile motion with quadratic air resistance.
 - `compare_projectile_models.py`: Compares the vacuum and air-drag models in a table and plot.
@@ -89,6 +90,7 @@ Run scripts from the repository root with Python so file paths like `assets/` wo
 ```bash
 python3 02_Computational_Physics/rc_circuit_sim.py
 python3 02_Computational_Physics/compare_sensor_filters.py
+python3 02_Computational_Physics/bouncing_ball.py
 python3 01_Numerical_Methods/monte_carlo_pi.py
 python3 01_Numerical_Methods/random_walk_diffusion.py
 python3 04_Robotics_Simulator/robot_core.py
@@ -208,6 +210,29 @@ python3 02_Computational_Physics/compare_sensor_filters.py
 
 With the fixed example data, the mean absolute error decreases from `0.392 m` for the raw sensor to `0.297 m` for the moving average and `0.289 m` for the EMA. The graph also shows the tradeoff: filtering reduces random noise, but filtered values take longer to follow a sudden distance change.
 
+## Bouncing Ball Simulation
+
+This example drops a ball from `10 m` and updates its velocity and height in small time steps:
+
+```text
+velocity = velocity - gravity * dt
+height = height + velocity * dt
+```
+
+When the ball reaches the ground, its velocity reverses direction and is multiplied by a restitution value of `0.75`. This makes each bounce lower than the previous one. The next peak height is approximately:
+
+```text
+next height = current height * restitution^2
+```
+
+Run the simulation from the repository root:
+
+```bash
+python3 02_Computational_Physics/bouncing_ball.py
+```
+
+The example completes 13 visible bounces before the rebound speed becomes very small. Its first rebound reaches about `5.62 m`, close to the theoretical value `10 * 0.75^2 = 5.625 m`.
+
 ## Example Outputs
 
 Some scripts generate plots so the results are easier to understand visually.
@@ -239,6 +264,10 @@ Some scripts generate plots so the results are easier to understand visually.
 ### Sensor Filter Comparison
 
 ![Sensor Filter Comparison](assets/sensor_filter_comparison.png)
+
+### Bouncing Ball Simulation
+
+![Bouncing Ball Simulation](assets/bouncing_ball_simulation.png)
 
 ## Notes
 
