@@ -36,6 +36,7 @@ Physics-related practice scripts. Each file focuses on one formula, model, or en
 
 - `free_fall.py`: Calculates velocity and displacement during ideal free fall.
 - `bouncing_ball.py`: Simulates repeated bounces with simple energy loss.
+- `bridge_load_distribution.py`: Shows how a moving load is shared by two bridge supports.
 - `projectile_sim.py`: Returns an analytical projectile trajectory without air resistance.
 - `projectile_drag.py`: Uses RK4 to simulate projectile motion with quadratic air resistance.
 - `compare_projectile_models.py`: Compares the vacuum and air-drag models in a table and plot.
@@ -91,6 +92,7 @@ Run scripts from the repository root with Python so file paths like `assets/` wo
 python3 02_Computational_Physics/rc_circuit_sim.py
 python3 02_Computational_Physics/compare_sensor_filters.py
 python3 02_Computational_Physics/bouncing_ball.py
+python3 02_Computational_Physics/bridge_load_distribution.py
 python3 01_Numerical_Methods/monte_carlo_pi.py
 python3 01_Numerical_Methods/random_walk_diffusion.py
 python3 04_Robotics_Simulator/robot_core.py
@@ -233,6 +235,25 @@ python3 02_Computational_Physics/bouncing_ball.py
 
 The example completes 13 visible bounces before the rebound speed becomes very small. Its first rebound reaches about `5.62 m`, close to the theoretical value `10 * 0.75^2 = 5.625 m`.
 
+## Bridge Load Distribution Study
+
+This example models a simply supported bridge with one vertical load moving from the left support to the right support. Static equilibrium gives the two support forces:
+
+```text
+left force  = load * (bridge length - load position) / bridge length
+right force = load * load position / bridge length
+```
+
+The script uses a `6 m` bridge and a `1000 N` load. At the left end, the left support carries all `1000 N`. At the midpoint, each support carries `500 N`. At the right end, the right support carries all `1000 N`.
+
+Run the study from the repository root:
+
+```bash
+python3 02_Computational_Physics/bridge_load_distribution.py
+```
+
+The two support forces always add up to the original load. The plot shows how the load is transferred smoothly from one support to the other as it moves across the bridge.
+
 ## Example Outputs
 
 Some scripts generate plots so the results are easier to understand visually.
@@ -268,6 +289,10 @@ Some scripts generate plots so the results are easier to understand visually.
 ### Bouncing Ball Simulation
 
 ![Bouncing Ball Simulation](assets/bouncing_ball_simulation.png)
+
+### Bridge Load Distribution
+
+![Bridge Load Distribution](assets/bridge_load_distribution.png)
 
 ## Notes
 
