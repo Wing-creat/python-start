@@ -11,6 +11,10 @@ The goal is not to build a large software project yet. Most files are short prog
 - plotting results with `matplotlib`
 - connecting code with physics and engineering examples
 
+## Summer 2026 Learning Update
+
+During part of summer 2026, updates became less regular while I prepared for an international move and attended university orientation. That transition was part of getting ready to begin my Engineering Physics studies. I am now returning to a steadier learning routine through small, manageable projects such as the bouncing-ball simulation and bridge load distribution study.
+
 ## Repository Structure
 
 ### `00_Archive_Basics`
