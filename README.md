@@ -42,6 +42,7 @@ Physics-related practice scripts. Each file focuses on one formula, model, or en
 - `bouncing_ball.py`: Simulates repeated bounces with simple energy loss.
 - `bridge_load_distribution.py`: Shows how a moving load is shared by two bridge supports.
 - `center_of_mass.py`: Calculates and visualizes the center of mass of point masses in two dimensions.
+- `automatic_water_tank.py`: Simulates a pump that automatically keeps a tank between two water levels.
 - `projectile_sim.py`: Returns an analytical projectile trajectory without air resistance.
 - `projectile_drag.py`: Uses RK4 to simulate projectile motion with quadratic air resistance.
 - `compare_projectile_models.py`: Compares the vacuum and air-drag models in a table and plot.
@@ -99,6 +100,7 @@ python3 02_Computational_Physics/compare_sensor_filters.py
 python3 02_Computational_Physics/bouncing_ball.py
 python3 02_Computational_Physics/bridge_load_distribution.py
 python3 02_Computational_Physics/center_of_mass.py
+python3 02_Computational_Physics/automatic_water_tank.py
 python3 01_Numerical_Methods/monte_carlo_pi.py
 python3 01_Numerical_Methods/random_walk_diffusion.py
 python3 04_Robotics_Simulator/robot_core.py
@@ -279,6 +281,31 @@ python3 02_Computational_Physics/center_of_mass.py
 
 The plot uses larger circles for larger masses and a red star for the calculated center of mass.
 
+## Automatic Water Tank Study
+
+This simulation uses a simple automatic controller to keep a water tank between two levels:
+
+- The pump turns on when the water level falls to `0.30 m`.
+- The pump turns off when the water level rises to `0.75 m`.
+- Water leaves the tank continuously at `0.008 m/s`.
+- When the pump is on, it adds water at `0.025 m/s`.
+
+The level changes during each small time step according to:
+
+```text
+level change = (pump flow - water usage) * time step
+```
+
+Using separate on and off levels is called hysteresis. It prevents the pump from switching rapidly on and off near a single control level.
+
+Run the simulation from the repository root:
+
+```bash
+python3 02_Computational_Physics/automatic_water_tank.py
+```
+
+The upper graph shows the water level moving between the two thresholds. The lower graph shows when the pump is on or off.
+
 ## Example Outputs
 
 Some scripts generate plots so the results are easier to understand visually.
@@ -322,6 +349,10 @@ Some scripts generate plots so the results are easier to understand visually.
 ### Center of Mass
 
 ![Center of Mass](assets/center_of_mass.png)
+
+### Automatic Water Tank
+
+![Automatic Water Tank](assets/automatic_water_tank.png)
 
 ## Notes
 
