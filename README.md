@@ -80,7 +80,7 @@ Basic robotics-related code based on ideas I have encountered through robotics p
 
 ## Requirements
 
-Most scripts only use standard Python 3. A few plotting files use:
+Most scripts only use standard Python 3. The visualization scripts also use:
 
 - `matplotlib`
 

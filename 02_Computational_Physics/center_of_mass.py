@@ -106,7 +106,9 @@ def save_center_of_mass_plot(
     plt.grid(True, linestyle="--", alpha=0.4)
     plt.legend(loc="lower right")
 
-    os.makedirs("assets", exist_ok=True)
+    output_directory = os.path.dirname(output_path)
+    if output_directory:
+        os.makedirs(output_directory, exist_ok=True)
     plt.savefig(output_path, dpi=300, bbox_inches="tight")
     plt.close()
 

@@ -118,7 +118,9 @@ def save_diffusion_plot(results: dict, output_path: str = OUTPUT_PATH) -> None:
     figure.suptitle("Two-Dimensional Random Walk Diffusion", fontsize=15)
     figure.tight_layout(rect=(0, 0, 1, 0.95))
 
-    os.makedirs(os.path.dirname(output_path), exist_ok=True)
+    output_directory = os.path.dirname(output_path)
+    if output_directory:
+        os.makedirs(output_directory, exist_ok=True)
     figure.savefig(output_path, dpi=300, bbox_inches="tight")
     plt.close(figure)
 

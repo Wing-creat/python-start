@@ -126,7 +126,9 @@ def save_workspace_plot(workspace: dict, output_path: str = OUTPUT_PATH) -> None
     color_bar.set_label("Elbow angle (degrees)")
     figure.tight_layout()
 
-    os.makedirs(os.path.dirname(output_path), exist_ok=True)
+    output_directory = os.path.dirname(output_path)
+    if output_directory:
+        os.makedirs(output_directory, exist_ok=True)
     figure.savefig(output_path, dpi=300, bbox_inches="tight")
     plt.close(figure)
 

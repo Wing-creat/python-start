@@ -115,7 +115,9 @@ def save_bounce_plot(simulation: dict, output_path: str = OUTPUT_PATH) -> None:
     plt.grid(True, linestyle="--", alpha=0.4)
     plt.legend()
 
-    os.makedirs("assets", exist_ok=True)
+    output_directory = os.path.dirname(output_path)
+    if output_directory:
+        os.makedirs(output_directory, exist_ok=True)
     plt.savefig(output_path, dpi=300, bbox_inches="tight")
     plt.close()
 
