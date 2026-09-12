@@ -52,6 +52,7 @@ Physics-related practice scripts. Each file focuses on one formula, model, or en
 - `pendulum_period.py`: Calculates the period of a simple pendulum.
 - `planet_weights.py`: Compares weight on different celestial bodies.
 - `celestial_body.py`: Uses a simple class to model planets and surface gravity.
+- `escape_velocity.py`: Compares the speed needed to escape from several Solar System bodies.
 - `sensor_data.py`: Simulates noisy sensor readings and applies a moving average.
 - `ema_filter.py`: Applies an exponential moving average filter.
 - `compare_sensor_filters.py`: Compares noisy data, a moving average, and an EMA.
@@ -101,6 +102,7 @@ python3 02_Computational_Physics/bouncing_ball.py
 python3 02_Computational_Physics/bridge_load_distribution.py
 python3 02_Computational_Physics/center_of_mass.py
 python3 02_Computational_Physics/automatic_water_tank.py
+python3 02_Computational_Physics/escape_velocity.py
 python3 01_Numerical_Methods/monte_carlo_pi.py
 python3 01_Numerical_Methods/random_walk_diffusion.py
 python3 04_Robotics_Simulator/robot_core.py
@@ -306,6 +308,24 @@ python3 02_Computational_Physics/automatic_water_tank.py
 
 The upper graph shows the water level moving between the two thresholds. The lower graph shows when the pump is on or off.
 
+## Escape Velocity Study
+
+This study compares the ideal surface escape velocities of the Moon, Mars, Earth, Neptune, and Jupiter. Escape velocity is the minimum starting speed an object needs to move away without falling back when no additional propulsion is used:
+
+```text
+escape velocity = sqrt(2 * G * mass / radius)
+```
+
+The model uses approximate masses and mean radii. It ignores atmosphere and planetary rotation so the comparison stays focused on gravity.
+
+Run the study from the repository root:
+
+```bash
+python3 02_Computational_Physics/escape_velocity.py
+```
+
+The results range from about `2.38 km/s` on the Moon to about `60.20 km/s` on Jupiter. Earth is about `11.19 km/s`. A body's mass makes escape harder, while a larger radius places the surface farther from its center of gravity.
+
 ## Example Outputs
 
 Some scripts generate plots so the results are easier to understand visually.
@@ -353,6 +373,10 @@ Some scripts generate plots so the results are easier to understand visually.
 ### Automatic Water Tank
 
 ![Automatic Water Tank](assets/automatic_water_tank.png)
+
+### Escape Velocity Across the Solar System
+
+![Escape Velocity Across the Solar System](assets/escape_velocity.png)
 
 ## Notes
 
