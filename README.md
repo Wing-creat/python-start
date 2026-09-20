@@ -79,11 +79,19 @@ Basic robotics-related code based on ideas I have encountered through robotics p
 - `two_link_arm_workspace.py`: Visualizes the reachable area of a two-link planar arm.
 - `ARCHITECTURE.md`: Notes about the purpose of the robotics simulation folder.
 
+### `05_Optics`
+
+Introductory computational-optics studies that connect simple physical models with numerical methods and plots.
+
+- `fourier_optics.py`: Creates a circular aperture and calculates its normalized far-field intensity.
+- `diffraction_study.py`: Visualizes the aperture, diffraction pattern, and center intensity cross-section.
+
 ## Requirements
 
 Most scripts only use standard Python 3. The visualization scripts also use:
 
 - `matplotlib`
+- `numpy`
 
 Install the extra packages with:
 
@@ -107,6 +115,7 @@ python3 01_Numerical_Methods/monte_carlo_pi.py
 python3 01_Numerical_Methods/random_walk_diffusion.py
 python3 04_Robotics_Simulator/robot_core.py
 python3 04_Robotics_Simulator/two_link_arm_workspace.py
+python3 05_Optics/diffraction_study.py
 ```
 
 Some files print numerical results in the terminal. Others create plots to make the physics or numerical method easier to see.
@@ -325,6 +334,20 @@ python3 02_Computational_Physics/escape_velocity.py
 ```
 
 The results range from about `2.38 km/s` on the Moon to about `60.20 km/s` on Jupiter. Earth is about `11.19 km/s`. A body's mass makes escape harder, while a larger radius places the surface farther from its center of gravity.
+
+## Circular-Aperture Diffraction Study
+
+This introductory Fourier-optics study asks how a circular opening changes the far-field pattern of monochromatic light. The numerical model follows this sequence:
+
+```text
+circular aperture -> 2D FFT -> |amplitude|^2 -> normalized intensity
+```
+
+It uses scalar Fraunhofer diffraction and normalized coordinates. The two-dimensional pattern shows a bright central feature surrounded by weaker rings, while the center cross-section makes the intensity change easier to see. A larger aperture produces a narrower central diffraction feature.
+
+This is an educational model of one optical principle, not a simulation of NIF or a complete laser system.
+
+![Circular Aperture Diffraction](assets/circular_aperture_diffraction.png)
 
 ## Example Outputs
 
