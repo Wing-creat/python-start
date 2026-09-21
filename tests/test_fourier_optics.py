@@ -16,6 +16,7 @@ from fourier_optics import (
     calculate_far_field_intensity,
     create_circular_aperture,
     create_coordinate_grid,
+    create_defocused_field,
 )
 from diffraction_study import save_diffraction_plot
 
@@ -89,6 +90,83 @@ class FourierOpticsTests(unittest.TestCase):
 
         self.assertTrue(np.allclose(intensity, np.flipud(intensity), atol=1e-12))
         self.assertTrue(np.allclose(intensity, np.fliplr(intensity), atol=1e-12))
+
+    def test_zero_defocus_matches_the_original_aperture(self):
+        x_grid, y_grid = create_coordinate_grid(101, 2.0)
+        aperture = create_circular_aperture(x_grid, y_grid, radius=0.35)
+
+        field = create_defocused_field(
+            aperture,
+            x_grid,
+            y_grid,
+            aperture_radius=0.35,
+            defocus_waves=0.0,
+        )
+
+        self.assertTrue(np.allclose(field, aperture))
+
+    def test_defocus_changes_phase_but_preserves_aperture_amplitude(self):
+        x_grid, y_grid = create_coordinate_grid(101, 2.0)
+        aperture = create_circular_aperture(x_grid, y_grid, radius=0.35)
+
+        field = create_defocused_field(
+            aperture,
+            x_grid,
+            y_grid,
+            aperture_radius=0.35,
+            defocus_waves=0.5,
+        )
+
+        self.assertTrue(np.allclose(np.abs(field), aperture))
+        self.assertFalse(np.allclose(field, aperture))
+
+    def test_defocus_reduces_the_far_field_peak(self):
+        x_grid, y_grid = create_coordinate_grid(101, 2.0)
+        aperture = create_circular_aperture(x_grid, y_grid, radius=0.35)
+        defocused_field = create_defocused_field(
+            aperture,
+            x_grid,
+            y_grid,
+            aperture_radius=0.35,
+            defocus_waves=0.5,
+        )
+
+        ideal_intensity = calculate_far_field_intensity(aperture, normalize=False)
+        defocused_intensity = calculate_far_field_intensity(
+            defocused_field,
+            normalize=False,
+        )
+
+        self.assertLess(np.max(defocused_intensity), np.max(ideal_intensity))
+
+    def test_invalid_defocus_parameters_are_rejected(self):
+        grid = np.zeros((3, 3))
+        aperture = np.ones((3, 3))
+
+        with self.assertRaises(ValueError):
+            create_defocused_field(aperture, grid, np.zeros((3, 2)), 1.0, 0.5)
+
+        for aperture_radius in (0.0, float("nan")):
+            with self.subTest(aperture_radius=aperture_radius):
+                with self.assertRaises(ValueError):
+                    create_defocused_field(
+                        aperture,
+                        grid,
+                        grid,
+                        aperture_radius,
+                        0.5,
+                    )
+
+        for defocus_waves in (float("nan"), float("inf")):
+            with self.subTest(defocus_waves=defocus_waves):
+                with self.assertRaises(ValueError):
+                    create_defocused_field(
+                        aperture,
+                        grid,
+                        grid,
+                        1.0,
+                        defocus_waves,
+                    )
 
     def test_larger_aperture_has_narrower_half_maximum_feature(self):
         x_grid, y_grid = create_coordinate_grid(201, 2.0)

@@ -44,18 +44,58 @@ def create_circular_aperture(
     return (distance_from_center <= radius).astype(float)
 
 
-def calculate_far_field_intensity(aperture: np.ndarray) -> np.ndarray:
-    """Return normalized Fraunhofer intensity for an aperture field."""
+def create_defocused_field(
+    aperture: np.ndarray,
+    x_grid: np.ndarray,
+    y_grid: np.ndarray,
+    aperture_radius: float,
+    defocus_waves: float,
+) -> np.ndarray:
+    """Apply a simple quadratic defocus phase to an aperture field."""
     aperture_array = np.asarray(aperture)
+    x_array = np.asarray(x_grid)
+    y_array = np.asarray(y_grid)
+
     if aperture_array.ndim != 2 or aperture_array.size == 0:
         raise ValueError("Aperture must be a non-empty 2D array.")
+    if x_array.ndim != 2 or y_array.ndim != 2:
+        raise ValueError("Coordinate grids must be matching 2D arrays.")
+    if (
+        x_array.shape != aperture_array.shape
+        or y_array.shape != aperture_array.shape
+    ):
+        raise ValueError("Aperture and coordinate grids must have matching shapes.")
     if not np.all(np.isfinite(aperture_array)):
         raise ValueError("Aperture values must be finite.")
-    if not np.any(np.abs(aperture_array) > 0):
-        raise ValueError("Aperture must contain at least one non-zero value.")
+    if not np.all(np.isfinite(x_array)) or not np.all(np.isfinite(y_array)):
+        raise ValueError("Coordinate grids must contain finite values.")
+    if not math.isfinite(aperture_radius) or aperture_radius <= 0:
+        raise ValueError("Aperture radius must be positive and finite.")
+    if not math.isfinite(defocus_waves):
+        raise ValueError("Defocus must be finite.")
+
+    normalized_radius_squared = (x_array**2 + y_array**2) / aperture_radius**2
+    phase = 2 * np.pi * defocus_waves * normalized_radius_squared
+    return aperture_array.astype(complex) * np.exp(1j * phase)
+
+
+def calculate_far_field_intensity(
+    optical_field: np.ndarray,
+    normalize: bool = True,
+) -> np.ndarray:
+    """Return Fraunhofer intensity for an aperture field."""
+    field_array = np.asarray(optical_field)
+    if field_array.ndim != 2 or field_array.size == 0:
+        raise ValueError("Optical field must be a non-empty 2D array.")
+    if not np.all(np.isfinite(field_array)):
+        raise ValueError("Optical field values must be finite.")
+    if not np.any(np.abs(field_array) > 0):
+        raise ValueError("Optical field must contain at least one non-zero value.")
 
     far_field_amplitude = np.fft.fftshift(
-        np.fft.fft2(np.fft.ifftshift(aperture_array))
+        np.fft.fft2(np.fft.ifftshift(field_array))
     )
     intensity = np.abs(far_field_amplitude) ** 2
-    return intensity / np.max(intensity)
+    if normalize:
+        return intensity / np.max(intensity)
+    return intensity
