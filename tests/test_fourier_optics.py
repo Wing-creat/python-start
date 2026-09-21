@@ -19,6 +19,7 @@ from fourier_optics import (
     create_defocused_field,
 )
 from diffraction_study import save_diffraction_plot
+from defocus_study import save_defocus_comparison
 
 
 class FourierOpticsTests(unittest.TestCase):
@@ -202,6 +203,33 @@ class FourierOpticsTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temporary_directory:
             output_path = Path(temporary_directory) / "optics" / "diffraction.png"
             save_diffraction_plot(aperture, intensity, str(output_path))
+            self.assertTrue(output_path.is_file())
+
+    def test_defocus_comparison_can_create_a_custom_output_directory(self):
+        x_grid, y_grid = create_coordinate_grid(101, 2.0)
+        aperture = create_circular_aperture(x_grid, y_grid, radius=0.35)
+        defocused_field = create_defocused_field(
+            aperture,
+            x_grid,
+            y_grid,
+            aperture_radius=0.35,
+            defocus_waves=0.5,
+        )
+        ideal_intensity = calculate_far_field_intensity(aperture, normalize=False)
+        defocused_intensity = calculate_far_field_intensity(
+            defocused_field,
+            normalize=False,
+        )
+        ideal_peak = np.max(ideal_intensity)
+
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            output_path = Path(temporary_directory) / "optics" / "defocus.png"
+            save_defocus_comparison(
+                ideal_intensity / ideal_peak,
+                defocused_intensity / ideal_peak,
+                defocus_waves=0.5,
+                output_path=str(output_path),
+            )
             self.assertTrue(output_path.is_file())
 
 

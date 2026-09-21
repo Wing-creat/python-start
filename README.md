@@ -83,8 +83,9 @@ Basic robotics-related code based on ideas I have encountered through robotics p
 
 Introductory computational-optics studies that connect simple physical models with numerical methods and plots.
 
-- `fourier_optics.py`: Creates a circular aperture and calculates its normalized far-field intensity.
+- `fourier_optics.py`: Creates circular-aperture fields, adds simple defocus, and calculates far-field intensity.
 - `diffraction_study.py`: Visualizes the aperture, diffraction pattern, and center intensity cross-section.
+- `defocus_study.py`: Compares ideal and defocused diffraction patterns on the same intensity scale.
 
 ## Requirements
 
@@ -116,6 +117,7 @@ python3 01_Numerical_Methods/random_walk_diffusion.py
 python3 04_Robotics_Simulator/robot_core.py
 python3 04_Robotics_Simulator/two_link_arm_workspace.py
 python3 05_Optics/diffraction_study.py
+python3 05_Optics/defocus_study.py
 ```
 
 Some files print numerical results in the terminal. Others create plots to make the physics or numerical method easier to see.
@@ -348,6 +350,14 @@ It uses scalar Fraunhofer diffraction and normalized coordinates. The two-dimens
 This is an educational model of one optical principle, not a simulation of NIF or a complete laser system.
 
 ![Circular Aperture Diffraction](assets/circular_aperture_diffraction.png)
+
+### Defocus Aberration Comparison
+
+The next step adds a quadratic phase error across the aperture. The example uses `0.5` waves of defocus at the aperture edge, then calculates both far-field patterns with the same ideal-peak reference. This makes the physical change visible: defocus lowers the central peak and redistributes light into the surrounding pattern.
+
+This remains a simplified educational wave-optics model. It demonstrates how a wavefront error changes an image-plane intensity pattern without claiming to represent a complete optical system.
+
+![Ideal and Defocused Diffraction](assets/defocus_aberration_comparison.png)
 
 ## Example Outputs
 
