@@ -21,6 +21,7 @@ from fourier_optics import (
 )
 from diffraction_study import save_diffraction_plot
 from defocus_study import save_defocus_comparison
+from defocus_sweep import save_defocus_sensitivity_plot
 
 
 class FourierOpticsTests(unittest.TestCase):
@@ -293,6 +294,19 @@ class FourierOpticsTests(unittest.TestCase):
                 defocused_intensity / ideal_peak,
                 defocus_waves=0.5,
                 output_path=str(output_path),
+            )
+            self.assertTrue(output_path.is_file())
+
+    def test_defocus_sweep_plot_can_create_a_custom_output_directory(self):
+        defocus_values = np.array([0.0, 0.25, 0.5])
+        relative_peaks = np.array([1.0, 0.81, 0.41])
+
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            output_path = Path(temporary_directory) / "optics" / "sweep.png"
+            save_defocus_sensitivity_plot(
+                defocus_values,
+                relative_peaks,
+                str(output_path),
             )
             self.assertTrue(output_path.is_file())
 

@@ -86,6 +86,7 @@ Introductory computational-optics studies that connect simple physical models wi
 - `fourier_optics.py`: Creates circular-aperture fields, adds simple defocus, and calculates far-field intensity.
 - `diffraction_study.py`: Visualizes the aperture, diffraction pattern, and center intensity cross-section.
 - `defocus_study.py`: Compares ideal and defocused diffraction patterns on the same intensity scale.
+- `defocus_sweep.py`: Measures how the diffraction peak changes as defocus increases.
 
 ## Requirements
 
@@ -118,6 +119,7 @@ python3 04_Robotics_Simulator/robot_core.py
 python3 04_Robotics_Simulator/two_link_arm_workspace.py
 python3 05_Optics/diffraction_study.py
 python3 05_Optics/defocus_study.py
+python3 05_Optics/defocus_sweep.py
 ```
 
 Some files print numerical results in the terminal. Others create plots to make the physics or numerical method easier to see.
@@ -358,6 +360,12 @@ The next step adds a quadratic phase error across the aperture. The example uses
 This remains a simplified educational wave-optics model. It demonstrates how a wavefront error changes an image-plane intensity pattern without claiming to represent a complete optical system.
 
 ![Ideal and Defocused Diffraction](assets/defocus_aberration_comparison.png)
+
+### Defocus Sensitivity Sweep
+
+The sweep repeats the same calculation from `0.0` to `1.0` wave of defocus. Peak intensity falls from `1.000` for the ideal aperture to about `0.405` at `0.5` waves and `0.049` at `1.0` wave. This turns the earlier single comparison into a small numerical experiment showing how image quality changes continuously as wavefront error grows.
+
+![Defocus Sensitivity Sweep](assets/defocus_sensitivity_sweep.png)
 
 ## Example Outputs
 
