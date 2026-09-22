@@ -23,6 +23,7 @@ from fourier_optics import (
 from diffraction_study import save_diffraction_plot
 from defocus_study import save_defocus_comparison
 from defocus_sweep import save_defocus_sensitivity_plot
+from tilt_study import save_tilt_comparison
 
 
 class FourierOpticsTests(unittest.TestCase):
@@ -399,6 +400,33 @@ class FourierOpticsTests(unittest.TestCase):
                 defocus_values,
                 relative_peaks,
                 str(output_path),
+            )
+            self.assertTrue(output_path.is_file())
+
+    def test_tilt_comparison_can_create_a_custom_output_directory(self):
+        x_grid, y_grid = create_coordinate_grid(101, 2.0)
+        aperture = create_circular_aperture(x_grid, y_grid, radius=0.35)
+        tilted_field = create_tilted_field(
+            aperture,
+            x_grid,
+            y_grid,
+            aperture_radius=0.35,
+            tilt_waves=2.0,
+        )
+        ideal_intensity = calculate_far_field_intensity(aperture, normalize=False)
+        tilted_intensity = calculate_far_field_intensity(
+            tilted_field,
+            normalize=False,
+        )
+        ideal_peak = np.max(ideal_intensity)
+
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            output_path = Path(temporary_directory) / "optics" / "tilt.png"
+            save_tilt_comparison(
+                ideal_intensity / ideal_peak,
+                tilted_intensity / ideal_peak,
+                tilt_waves=2.0,
+                output_path=str(output_path),
             )
             self.assertTrue(output_path.is_file())
 
