@@ -79,6 +79,40 @@ def create_defocused_field(
     return aperture_array.astype(complex) * np.exp(1j * phase)
 
 
+def create_tilted_field(
+    aperture: np.ndarray,
+    x_grid: np.ndarray,
+    y_grid: np.ndarray,
+    aperture_radius: float,
+    tilt_waves: float,
+) -> np.ndarray:
+    """Apply a linear phase tilt across a circular aperture field."""
+    aperture_array = np.asarray(aperture)
+    x_array = np.asarray(x_grid)
+    y_array = np.asarray(y_grid)
+
+    if aperture_array.ndim != 2 or aperture_array.size == 0:
+        raise ValueError("Aperture must be a non-empty 2D array.")
+    if x_array.ndim != 2 or y_array.ndim != 2:
+        raise ValueError("Coordinate grids must be matching 2D arrays.")
+    if (
+        x_array.shape != aperture_array.shape
+        or y_array.shape != aperture_array.shape
+    ):
+        raise ValueError("Aperture and coordinate grids must have matching shapes.")
+    if not np.all(np.isfinite(aperture_array)):
+        raise ValueError("Aperture values must be finite.")
+    if not np.all(np.isfinite(x_array)) or not np.all(np.isfinite(y_array)):
+        raise ValueError("Coordinate grids must contain finite values.")
+    if not math.isfinite(aperture_radius) or aperture_radius <= 0:
+        raise ValueError("Aperture radius must be positive and finite.")
+    if not math.isfinite(tilt_waves):
+        raise ValueError("Tilt must be finite.")
+
+    phase = 2 * np.pi * tilt_waves * x_array / (2 * aperture_radius)
+    return aperture_array.astype(complex) * np.exp(1j * phase)
+
+
 def calculate_far_field_intensity(
     optical_field: np.ndarray,
     normalize: bool = True,

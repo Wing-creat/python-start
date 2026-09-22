@@ -18,6 +18,7 @@ from fourier_optics import (
     create_circular_aperture,
     create_coordinate_grid,
     create_defocused_field,
+    create_tilted_field,
 )
 from diffraction_study import save_diffraction_plot
 from defocus_study import save_defocus_comparison
@@ -232,6 +233,97 @@ class FourierOpticsTests(unittest.TestCase):
                         grid,
                         1.0,
                         defocus_waves,
+                    )
+
+    def test_zero_tilt_matches_the_original_aperture(self):
+        x_grid, y_grid = create_coordinate_grid(101, 2.0)
+        aperture = create_circular_aperture(x_grid, y_grid, radius=0.35)
+
+        field = create_tilted_field(
+            aperture,
+            x_grid,
+            y_grid,
+            aperture_radius=0.35,
+            tilt_waves=0.0,
+        )
+
+        self.assertTrue(np.allclose(field, aperture))
+
+    def test_tilt_changes_phase_but_preserves_aperture_amplitude(self):
+        x_grid, y_grid = create_coordinate_grid(101, 2.0)
+        aperture = create_circular_aperture(x_grid, y_grid, radius=0.35)
+
+        field = create_tilted_field(
+            aperture,
+            x_grid,
+            y_grid,
+            aperture_radius=0.35,
+            tilt_waves=1.0,
+        )
+
+        self.assertTrue(np.allclose(np.abs(field), aperture))
+        self.assertFalse(np.allclose(field, aperture))
+
+    def test_positive_and_negative_tilt_move_peak_in_opposite_directions(self):
+        x_grid, y_grid = create_coordinate_grid(101, 2.0)
+        aperture = create_circular_aperture(x_grid, y_grid, radius=0.35)
+        positive_field = create_tilted_field(
+            aperture,
+            x_grid,
+            y_grid,
+            aperture_radius=0.35,
+            tilt_waves=1.0,
+        )
+        negative_field = create_tilted_field(
+            aperture,
+            x_grid,
+            y_grid,
+            aperture_radius=0.35,
+            tilt_waves=-1.0,
+        )
+
+        positive_peak = np.unravel_index(
+            np.argmax(calculate_far_field_intensity(positive_field)),
+            aperture.shape,
+        )
+        negative_peak = np.unravel_index(
+            np.argmax(calculate_far_field_intensity(negative_field)),
+            aperture.shape,
+        )
+        center = aperture.shape[1] // 2
+
+        self.assertGreater(positive_peak[1], center)
+        self.assertLess(negative_peak[1], center)
+        self.assertEqual(positive_peak[0], center)
+        self.assertEqual(negative_peak[0], center)
+
+    def test_invalid_tilt_parameters_are_rejected(self):
+        grid = np.zeros((3, 3))
+        aperture = np.ones((3, 3))
+
+        with self.assertRaises(ValueError):
+            create_tilted_field(aperture, grid, np.zeros((3, 2)), 1.0, 0.5)
+
+        for aperture_radius in (0.0, float("nan")):
+            with self.subTest(aperture_radius=aperture_radius):
+                with self.assertRaises(ValueError):
+                    create_tilted_field(
+                        aperture,
+                        grid,
+                        grid,
+                        aperture_radius,
+                        0.5,
+                    )
+
+        for tilt_waves in (float("nan"), float("inf")):
+            with self.subTest(tilt_waves=tilt_waves):
+                with self.assertRaises(ValueError):
+                    create_tilted_field(
+                        aperture,
+                        grid,
+                        grid,
+                        1.0,
+                        tilt_waves,
                     )
 
     def test_larger_aperture_has_narrower_half_maximum_feature(self):
