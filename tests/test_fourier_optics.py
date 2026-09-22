@@ -13,6 +13,7 @@ OPTICS_DIRECTORY = PROJECT_ROOT / "05_Optics"
 sys.path.insert(0, str(OPTICS_DIRECTORY))
 
 from fourier_optics import (
+    calculate_defocus_sensitivity,
     calculate_far_field_intensity,
     create_circular_aperture,
     create_coordinate_grid,
@@ -139,6 +140,69 @@ class FourierOpticsTests(unittest.TestCase):
         )
 
         self.assertLess(np.max(defocused_intensity), np.max(ideal_intensity))
+
+    def test_defocus_sensitivity_starts_at_the_ideal_peak(self):
+        x_grid, y_grid = create_coordinate_grid(101, 2.0)
+        aperture = create_circular_aperture(x_grid, y_grid, radius=0.35)
+
+        relative_peaks = calculate_defocus_sensitivity(
+            aperture,
+            x_grid,
+            y_grid,
+            aperture_radius=0.35,
+            defocus_values=np.array([0.0, 0.25, 0.5]),
+        )
+
+        self.assertEqual(relative_peaks.shape, (3,))
+        self.assertAlmostEqual(relative_peaks[0], 1.0)
+
+    def test_positive_and_negative_defocus_have_equal_sensitivity(self):
+        x_grid, y_grid = create_coordinate_grid(101, 2.0)
+        aperture = create_circular_aperture(x_grid, y_grid, radius=0.35)
+
+        relative_peaks = calculate_defocus_sensitivity(
+            aperture,
+            x_grid,
+            y_grid,
+            aperture_radius=0.35,
+            defocus_values=np.array([-0.5, 0.5]),
+        )
+
+        self.assertAlmostEqual(relative_peaks[0], relative_peaks[1])
+
+    def test_relative_peak_falls_for_moderate_defocus(self):
+        x_grid, y_grid = create_coordinate_grid(101, 2.0)
+        aperture = create_circular_aperture(x_grid, y_grid, radius=0.35)
+
+        relative_peaks = calculate_defocus_sensitivity(
+            aperture,
+            x_grid,
+            y_grid,
+            aperture_radius=0.35,
+            defocus_values=np.array([0.0, 0.25, 0.5]),
+        )
+
+        self.assertTrue(np.all(np.diff(relative_peaks) < 0.0))
+
+    def test_invalid_defocus_sweep_values_are_rejected(self):
+        grid = np.zeros((3, 3))
+        aperture = np.ones((3, 3))
+
+        invalid_values = (
+            np.array([]),
+            np.array([[0.0, 0.5]]),
+            np.array([0.0, float("nan")]),
+        )
+        for defocus_values in invalid_values:
+            with self.subTest(defocus_values=defocus_values):
+                with self.assertRaises(ValueError):
+                    calculate_defocus_sensitivity(
+                        aperture,
+                        grid,
+                        grid,
+                        aperture_radius=1.0,
+                        defocus_values=defocus_values,
+                    )
 
     def test_invalid_defocus_parameters_are_rejected(self):
         grid = np.zeros((3, 3))

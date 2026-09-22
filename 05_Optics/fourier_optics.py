@@ -99,3 +99,38 @@ def calculate_far_field_intensity(
     if normalize:
         return intensity / np.max(intensity)
     return intensity
+
+
+def calculate_defocus_sensitivity(
+    aperture: np.ndarray,
+    x_grid: np.ndarray,
+    y_grid: np.ndarray,
+    aperture_radius: float,
+    defocus_values: np.ndarray,
+) -> np.ndarray:
+    """Return far-field peak intensity relative to the ideal aperture."""
+    values = np.asarray(defocus_values, dtype=float)
+    if values.ndim != 1 or values.size == 0:
+        raise ValueError("Defocus values must be a non-empty 1D array.")
+    if not np.all(np.isfinite(values)):
+        raise ValueError("Defocus values must be finite.")
+
+    ideal_intensity = calculate_far_field_intensity(aperture, normalize=False)
+    ideal_peak = np.max(ideal_intensity)
+    relative_peaks = []
+
+    for defocus_waves in values:
+        defocused_field = create_defocused_field(
+            aperture,
+            x_grid,
+            y_grid,
+            aperture_radius,
+            float(defocus_waves),
+        )
+        intensity = calculate_far_field_intensity(
+            defocused_field,
+            normalize=False,
+        )
+        relative_peaks.append(np.max(intensity) / ideal_peak)
+
+    return np.asarray(relative_peaks)
