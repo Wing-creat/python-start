@@ -88,6 +88,7 @@ Introductory computational-optics studies that connect simple physical models wi
 - `defocus_study.py`: Compares ideal and defocused diffraction patterns on the same intensity scale.
 - `defocus_sweep.py`: Measures how the diffraction peak changes as defocus increases.
 - `tilt_study.py`: Shows how a linear wavefront tilt shifts the far-field diffraction pattern.
+- `grid_convergence_study.py`: Checks whether the defocus result stabilizes as the numerical grid is refined.
 
 ## Requirements
 
@@ -122,6 +123,7 @@ python3 05_Optics/diffraction_study.py
 python3 05_Optics/defocus_study.py
 python3 05_Optics/defocus_sweep.py
 python3 05_Optics/tilt_study.py
+python3 05_Optics/grid_convergence_study.py
 ```
 
 Some files print numerical results in the terminal. Others create plots to make the physics or numerical method easier to see.
@@ -376,6 +378,14 @@ A linear phase ramp represents a tilted incoming wavefront. In this example, a t
 The shift is reported in simulation pixels because this introductory model uses normalized coordinates rather than a specific wavelength, focal length, or detector.
 
 ![Wavefront Tilt Comparison](assets/wavefront_tilt_comparison.png)
+
+### Numerical Grid-Convergence Check
+
+The same `0.5`-wave defocus calculation is repeated on grids from `33 × 33` to `513 × 513`. Coarse grids fluctuate because the circular aperture is represented by relatively few samples. At finer resolutions the relative peak settles near `0.405`; changing from `257 × 257` to `513 × 513` changes the result by only about `0.000084`.
+
+This check does not prove that the simplified optical model represents every real system. It shows that this reported result is no longer changing much when the numerical grid is refined.
+
+![Fourier-Optics Grid Convergence](assets/fourier_optics_grid_convergence.png)
 
 ## Example Outputs
 

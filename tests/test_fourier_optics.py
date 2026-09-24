@@ -23,7 +23,10 @@ from fourier_optics import (
 from diffraction_study import save_diffraction_plot
 from defocus_study import save_defocus_comparison
 from defocus_sweep import save_defocus_sensitivity_plot
-from grid_convergence_study import calculate_defocus_grid_convergence
+from grid_convergence_study import (
+    calculate_defocus_grid_convergence,
+    save_grid_convergence_plot,
+)
 from tilt_study import save_tilt_comparison
 
 
@@ -471,6 +474,20 @@ class FourierOpticsTests(unittest.TestCase):
                 ideal_intensity / ideal_peak,
                 tilted_intensity / ideal_peak,
                 tilt_waves=2.0,
+                output_path=str(output_path),
+            )
+            self.assertTrue(output_path.is_file())
+
+    def test_grid_convergence_plot_can_create_a_custom_output_directory(self):
+        grid_sizes = np.array([65, 129, 257])
+        relative_peaks = np.array([0.391, 0.403, 0.405])
+
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            output_path = Path(temporary_directory) / "optics" / "convergence.png"
+            save_grid_convergence_plot(
+                grid_sizes,
+                relative_peaks,
+                defocus_waves=0.5,
                 output_path=str(output_path),
             )
             self.assertTrue(output_path.is_file())
