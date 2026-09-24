@@ -23,6 +23,7 @@ from fourier_optics import (
 from diffraction_study import save_diffraction_plot
 from defocus_study import save_defocus_comparison
 from defocus_sweep import save_defocus_sensitivity_plot
+from grid_convergence_study import calculate_defocus_grid_convergence
 from tilt_study import save_tilt_comparison
 
 
@@ -325,6 +326,50 @@ class FourierOpticsTests(unittest.TestCase):
                         grid,
                         1.0,
                         tilt_waves,
+                    )
+
+    def test_grid_convergence_returns_one_result_per_grid_size(self):
+        relative_peaks = calculate_defocus_grid_convergence(
+            grid_sizes=np.array([65, 129, 257]),
+            physical_size=2.0,
+            aperture_radius=0.35,
+            defocus_waves=0.5,
+        )
+
+        self.assertEqual(relative_peaks.shape, (3,))
+        self.assertTrue(np.all(np.isfinite(relative_peaks)))
+        self.assertTrue(np.all(relative_peaks > 0.0))
+        self.assertTrue(np.all(relative_peaks < 1.0))
+
+    def test_defocus_result_stabilizes_as_grid_is_refined(self):
+        relative_peaks = calculate_defocus_grid_convergence(
+            grid_sizes=np.array([65, 129, 257]),
+            physical_size=2.0,
+            aperture_radius=0.35,
+            defocus_waves=0.5,
+        )
+
+        coarse_change = abs(relative_peaks[1] - relative_peaks[0])
+        fine_change = abs(relative_peaks[2] - relative_peaks[1])
+
+        self.assertLess(fine_change, coarse_change)
+
+    def test_invalid_convergence_grid_sizes_are_rejected(self):
+        invalid_grid_sizes = (
+            np.array([]),
+            np.array([[65, 129]]),
+            np.array([65.0, 129.0]),
+            np.array([64, 129]),
+        )
+
+        for grid_sizes in invalid_grid_sizes:
+            with self.subTest(grid_sizes=grid_sizes):
+                with self.assertRaises(ValueError):
+                    calculate_defocus_grid_convergence(
+                        grid_sizes=grid_sizes,
+                        physical_size=2.0,
+                        aperture_radius=0.35,
+                        defocus_waves=0.5,
                     )
 
     def test_larger_aperture_has_narrower_half_maximum_feature(self):
