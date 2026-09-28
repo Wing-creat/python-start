@@ -83,6 +83,8 @@ Basic robotics-related code based on ideas I have encountered through robotics p
 
 Introductory computational-optics studies that connect simple physical models with numerical methods and plots.
 
+See the [Fourier-optics study guide](05_Optics/README.md) for the model, experiment sequence, key results, tests, and limitations.
+
 - `fourier_optics.py`: Creates circular-aperture fields, adds simple defocus, and calculates far-field intensity.
 - `diffraction_study.py`: Visualizes the aperture, diffraction pattern, and center intensity cross-section.
 - `defocus_study.py`: Compares ideal and defocused diffraction patterns on the same intensity scale.
