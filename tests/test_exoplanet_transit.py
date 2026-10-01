@@ -2,6 +2,7 @@
 
 import sys
 import unittest
+from math import pi
 from pathlib import Path
 
 
@@ -9,7 +10,11 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 ASTRONOMY_DIRECTORY = PROJECT_ROOT / "06_Astronomy"
 sys.path.insert(0, str(ASTRONOMY_DIRECTORY))
 
-from exoplanet_transit import calculate_minimum_flux, calculate_transit_depth
+from exoplanet_transit import (
+    calculate_minimum_flux,
+    calculate_overlap_area,
+    calculate_transit_depth,
+)
 
 
 class ExoplanetTransitTests(unittest.TestCase):
@@ -35,6 +40,35 @@ class ExoplanetTransitTests(unittest.TestCase):
             calculate_transit_depth(2.0, 0.2),
             calculate_transit_depth(1.0, 0.1),
         )
+
+    def test_disks_at_or_beyond_external_tangent_have_zero_overlap(self):
+        for center_separation in (1.1, 1.2):
+            with self.subTest(center_separation=center_separation):
+                self.assertEqual(
+                    calculate_overlap_area(1.0, 0.1, center_separation),
+                    0.0,
+                )
+
+    def test_planet_at_or_inside_internal_tangent_has_full_overlap(self):
+        expected_area = pi * 0.1**2
+
+        for center_separation in (0.0, 0.9):
+            with self.subTest(center_separation=center_separation):
+                self.assertAlmostEqual(
+                    calculate_overlap_area(1.0, 0.1, center_separation),
+                    expected_area,
+                )
+
+    def test_partially_overlapping_equal_disks_match_known_area(self):
+        overlap_area = calculate_overlap_area(1.0, 1.0, 1.0)
+
+        self.assertAlmostEqual(overlap_area, 1.228369698608757)
+
+    def test_invalid_center_separation_is_rejected(self):
+        for center_separation in (-0.1, float("nan"), float("inf")):
+            with self.subTest(center_separation=center_separation):
+                with self.assertRaises(ValueError):
+                    calculate_overlap_area(1.0, 0.1, center_separation)
 
     def test_zero_radius_is_rejected(self):
         self._assert_invalid_radii(((0.0, 0.1), (1.0, 0.0)))

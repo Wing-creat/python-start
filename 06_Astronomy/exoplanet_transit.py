@@ -1,6 +1,6 @@
 """Simple calculations for a central exoplanet transit."""
 
-from math import isfinite
+from math import acos, isfinite, pi, sqrt
 
 
 def _validate_radii(star_radius: float, planet_radius: float) -> None:
@@ -24,6 +24,46 @@ def calculate_minimum_flux(star_radius: float, planet_radius: float) -> float:
     """Return the minimum normalized flux during a central transit."""
     transit_depth = calculate_transit_depth(star_radius, planet_radius)
     return 1.0 - transit_depth
+
+
+def calculate_overlap_area(
+    star_radius: float,
+    planet_radius: float,
+    center_separation: float,
+) -> float:
+    """Return the overlapping area of the star and planet disks."""
+    _validate_radii(star_radius, planet_radius)
+    if not isfinite(center_separation):
+        raise ValueError("Center separation must be finite.")
+    if center_separation < 0.0:
+        raise ValueError("Center separation cannot be negative.")
+
+    if center_separation >= star_radius + planet_radius:
+        return 0.0
+    if center_separation <= star_radius - planet_radius:
+        return pi * planet_radius**2
+
+    distance_squared = center_separation**2
+    star_angle = acos(
+        (distance_squared + star_radius**2 - planet_radius**2)
+        / (2.0 * center_separation * star_radius)
+    )
+    planet_angle = acos(
+        (distance_squared + planet_radius**2 - star_radius**2)
+        / (2.0 * center_separation * planet_radius)
+    )
+    lens_width = sqrt(
+        (-center_separation + star_radius + planet_radius)
+        * (center_separation + star_radius - planet_radius)
+        * (center_separation - star_radius + planet_radius)
+        * (center_separation + star_radius + planet_radius)
+    )
+
+    return (
+        star_radius**2 * star_angle
+        + planet_radius**2 * planet_angle
+        - 0.5 * lens_width
+    )
 
 
 if __name__ == "__main__":
