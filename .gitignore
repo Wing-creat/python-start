@@ -3,6 +3,7 @@
 
 # Local caches
 .matplotlib_cache/
+.worktrees/
 __pycache__/
 *.pyc
 
