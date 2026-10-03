@@ -66,6 +66,45 @@ def calculate_overlap_area(
     )
 
 
+def calculate_projected_separation(
+    time: float,
+    transit_speed: float,
+    impact_parameter: float = 0.0,
+) -> float:
+    """Return the projected center separation at a time from mid-transit."""
+    if not isfinite(time):
+        raise ValueError("Time must be finite.")
+    if not isfinite(transit_speed) or transit_speed <= 0.0:
+        raise ValueError("Transit speed must be finite and positive.")
+    if not isfinite(impact_parameter) or impact_parameter < 0.0:
+        raise ValueError("Impact parameter must be finite and non-negative.")
+
+    along_path_distance = transit_speed * time
+    return sqrt(along_path_distance**2 + impact_parameter**2)
+
+
+def calculate_flux_at_time(
+    time: float,
+    star_radius: float,
+    planet_radius: float,
+    transit_speed: float,
+    impact_parameter: float = 0.0,
+) -> float:
+    """Return normalized stellar flux at a time from mid-transit."""
+    center_separation = calculate_projected_separation(
+        time,
+        transit_speed,
+        impact_parameter,
+    )
+    overlap_area = calculate_overlap_area(
+        star_radius,
+        planet_radius,
+        center_separation,
+    )
+    star_area = pi * star_radius**2
+    return 1.0 - overlap_area / star_area
+
+
 if __name__ == "__main__":
     star_radius = 1.0
     planet_radius = 0.1
