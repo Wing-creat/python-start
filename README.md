@@ -92,6 +92,13 @@ See the [Fourier-optics study guide](05_Optics/README.md) for the model, experim
 - `tilt_study.py`: Shows how a linear wavefront tilt shifts the far-field diffraction pattern.
 - `grid_convergence_study.py`: Checks whether the defocus result stabilizes as the numerical grid is refined.
 
+### `06_Astronomy`
+
+Introductory astronomy studies that use geometry and simple numerical models to explain observable effects.
+
+- `exoplanet_transit.py`: Calculates how a planet blocks part of a star's light as it moves across the stellar disk.
+- `transit_study.py`: Generates and plots a synthetic exoplanet transit light curve.
+
 ## Requirements
 
 Most scripts only use standard Python 3. The visualization scripts also use:
@@ -126,6 +133,8 @@ python3 05_Optics/defocus_study.py
 python3 05_Optics/defocus_sweep.py
 python3 05_Optics/tilt_study.py
 python3 05_Optics/grid_convergence_study.py
+python3 06_Astronomy/exoplanet_transit.py
+python3 06_Astronomy/transit_study.py
 ```
 
 Some files print numerical results in the terminal. Others create plots to make the physics or numerical method easier to see.
@@ -440,6 +449,10 @@ Some scripts generate plots so the results are easier to understand visually.
 ### Escape Velocity Across the Solar System
 
 ![Escape Velocity Across the Solar System](assets/escape_velocity.png)
+
+### Exoplanet Transit Light Curve
+
+![Exoplanet Transit Light Curve](assets/exoplanet_transit_light_curve.png)
 
 ## Notes
 
