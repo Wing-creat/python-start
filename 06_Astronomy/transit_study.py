@@ -24,6 +24,9 @@ def generate_light_curve(
     impact_parameter: float = 0.0,
 ) -> list[float]:
     """Return normalized stellar flux for each observation time."""
+    if not times:
+        raise ValueError("At least one observation time is required.")
+
     return [
         calculate_flux_at_time(
             time,
@@ -42,6 +45,9 @@ def save_transit_light_curve(
     output_path: str = OUTPUT_PATH,
 ) -> None:
     """Save a plot of normalized stellar flux over time."""
+    if len(times) != len(fluxes):
+        raise ValueError("Times and fluxes must contain the same number of values.")
+
     figure, axis = plt.subplots(figsize=(9, 5.5))
     axis.plot(times, fluxes, color="#2563eb", linewidth=2)
     axis.axhline(1.0, color="#64748b", linestyle="--", linewidth=1)

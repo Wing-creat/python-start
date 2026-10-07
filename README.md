@@ -96,6 +96,8 @@ See the [Fourier-optics study guide](05_Optics/README.md) for the model, experim
 
 Introductory astronomy studies that use geometry and simple numerical models to explain observable effects.
 
+See the [exoplanet-transit study guide](06_Astronomy/README.md) for the model, assumptions, results, tests, and limitations.
+
 - `exoplanet_transit.py`: Calculates how a planet blocks part of a star's light as it moves across the stellar disk.
 - `transit_study.py`: Generates and plots a synthetic exoplanet transit light curve.
 
@@ -453,6 +455,10 @@ Some scripts generate plots so the results are easier to understand visually.
 ### Exoplanet Transit Light Curve
 
 ![Exoplanet Transit Light Curve](assets/exoplanet_transit_light_curve.png)
+
+### Exoplanet Transit Parameter Comparison
+
+![Exoplanet Transit Parameter Comparison](assets/exoplanet_transit_parameter_comparison.png)
 
 ## Notes
 

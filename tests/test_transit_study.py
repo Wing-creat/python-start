@@ -30,6 +30,10 @@ class TransitStudyTests(unittest.TestCase):
 
         self.assertAlmostEqual(fluxes[0], fluxes[1])
 
+    def test_empty_observation_times_are_rejected(self):
+        with self.assertRaises(ValueError):
+            generate_light_curve([])
+
     def test_larger_planet_produces_a_deeper_transit(self):
         small_planet_flux = generate_light_curve([0.0], planet_radius=0.05)
         large_planet_flux = generate_light_curve([0.0], planet_radius=0.15)
@@ -55,6 +59,10 @@ class TransitStudyTests(unittest.TestCase):
 
             self.assertTrue(output_path.is_file())
             self.assertGreater(output_path.stat().st_size, 0)
+
+    def test_mismatched_times_and_fluxes_are_rejected(self):
+        with self.assertRaisesRegex(ValueError, "same number"):
+            save_transit_light_curve([0.0, 1.0], [1.0])
 
     def test_parameter_comparison_is_saved_to_the_requested_path(self):
         times = [-3.0, 0.0, 3.0]
