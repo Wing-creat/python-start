@@ -43,6 +43,7 @@ Physics-related practice scripts. Each file focuses on one formula, model, or en
 - `bridge_load_distribution.py`: Shows how a moving load is shared by two bridge supports.
 - `center_of_mass.py`: Calculates and visualizes the center of mass of point masses in two dimensions.
 - `automatic_water_tank.py`: Simulates a pump that automatically keeps a tank between two water levels.
+- `buoyancy_score.py`: Illustrates the payload-to-boat mass ratio from an IDEA printed-boat project.
 - `projectile_sim.py`: Returns an analytical projectile trajectory without air resistance.
 - `projectile_drag.py`: Uses RK4 to simulate projectile motion with quadratic air resistance.
 - `compare_projectile_models.py`: Compares the vacuum and air-drag models in a table and plot.
@@ -125,6 +126,7 @@ python3 02_Computational_Physics/bouncing_ball.py
 python3 02_Computational_Physics/bridge_load_distribution.py
 python3 02_Computational_Physics/center_of_mass.py
 python3 02_Computational_Physics/automatic_water_tank.py
+python3 02_Computational_Physics/buoyancy_score.py
 python3 02_Computational_Physics/escape_velocity.py
 python3 01_Numerical_Methods/monte_carlo_pi.py
 python3 01_Numerical_Methods/random_walk_diffusion.py
@@ -337,6 +339,40 @@ python3 02_Computational_Physics/automatic_water_tank.py
 ```
 
 The upper graph shows the water level moving between the two thresholds. The lower graph shows when the pump is on or off.
+
+## IDEA Printed-Boat Buoyancy Score
+
+In IDEA Project 1, our team made an open-top, box-shaped 3D-printed boat and
+tested it by adding iron balls. Our highest reported buoyancy score was `27.8`.
+This script uses the remembered scoring definition, pending confirmation from
+the course rubric:
+
+```text
+buoyancy score = iron-ball payload mass / boat mass
+```
+
+The example normalizes boat mass to `1.0` and payload mass to `27.8`. These
+are relative units, not recorded measurements in grams. A score of `27.8`
+means the payload is 27.8 times the boat's own mass.
+
+For a boat floating at rest, Archimedes' principle gives:
+
+```text
+displaced-water mass = boat mass + payload mass
+```
+
+The required displaced-water mass is therefore `28.8` times the boat mass.
+This is an equilibrium requirement, not an estimate of maximum capacity:
+the script does not model hull dimensions, tipping, leakage, or water entering
+the open top.
+
+Run from the repository root:
+
+```bash
+python3 02_Computational_Physics/buoyancy_score.py
+```
+
+![IDEA Boat Buoyancy Score](assets/buoyancy_score.png)
 
 ## Escape Velocity Study
 
