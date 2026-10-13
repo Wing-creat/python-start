@@ -44,6 +44,7 @@ Physics-related practice scripts. Each file focuses on one formula, model, or en
 - `center_of_mass.py`: Calculates and visualizes the center of mass of point masses in two dimensions.
 - `automatic_water_tank.py`: Simulates a pump that automatically keeps a tank between two water levels.
 - `buoyancy_score.py`: Illustrates the payload-to-boat mass ratio from an IDEA printed-boat project.
+- `cooling_curve.py`: Plots a hot drink approaching room temperature using Newton's cooling law.
 - `projectile_sim.py`: Returns an analytical projectile trajectory without air resistance.
 - `projectile_drag.py`: Uses RK4 to simulate projectile motion with quadratic air resistance.
 - `compare_projectile_models.py`: Compares the vacuum and air-drag models in a table and plot.
@@ -127,6 +128,7 @@ python3 02_Computational_Physics/bridge_load_distribution.py
 python3 02_Computational_Physics/center_of_mass.py
 python3 02_Computational_Physics/automatic_water_tank.py
 python3 02_Computational_Physics/buoyancy_score.py
+python3 02_Computational_Physics/cooling_curve.py
 python3 02_Computational_Physics/escape_velocity.py
 python3 01_Numerical_Methods/monte_carlo_pi.py
 python3 01_Numerical_Methods/random_walk_diffusion.py
@@ -373,6 +375,35 @@ python3 02_Computational_Physics/buoyancy_score.py
 ```
 
 ![IDEA Boat Buoyancy Score](assets/buoyancy_score.png)
+
+## Hot Drink Cooling Study
+
+This example asks how the temperature of a hot drink changes in a room with
+constant temperature. Newton's cooling law assumes the rate of temperature
+change is proportional to the difference between the drink and its surroundings:
+
+```text
+T(t) = T_room + (T_initial - T_room) * exp(-k * t)
+```
+
+The script evaluates this analytical formula once per minute for 60 minutes.
+The illustrative initial temperature is `80 °C`, room temperature is `22 °C`,
+and cooling rate `k` is `0.05` per minute. The temperature reaches about
+`43.34 °C` after 20 minutes and `24.89 °C` after 60 minutes.
+
+Cooling is fastest at the beginning, when the temperature difference is
+largest. The curve then gradually approaches room temperature. These parameters
+are assumed, not measured from a real drink. The model treats the drink as
+having one uniform temperature and a constant cooling rate; it does not model
+evaporation or changing room conditions separately.
+
+Run from the repository root:
+
+```bash
+python3 02_Computational_Physics/cooling_curve.py
+```
+
+![Hot Drink Cooling Curve](assets/cooling_curve.png)
 
 ## Escape Velocity Study
 
