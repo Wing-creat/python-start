@@ -71,6 +71,7 @@ Small simulations using game-like examples. These files are less formal physics 
 - `elden_ring_fall.py`: Uses height thresholds to model fall damage.
 - `boss_combat_log.py`: Tracks damage values across several hits.
 - `weapon_database.py`: Stores and looks up weapon data with dictionaries.
+- `mars_water_budget.py`: Tracks an illustrative Mars habitat's daily water stock and recycling losses.
 
 ### `04_Robotics_Simulator`
 
@@ -375,6 +376,32 @@ python3 02_Computational_Physics/buoyancy_score.py
 ```
 
 ![IDEA Boat Buoyancy Score](assets/buoyancy_score.png)
+
+## Mars Habitat Water Budget
+
+This first small Mars-themed exercise tracks a water inventory using a daily
+resource balance:
+
+```text
+daily net loss = crew size * water use per person * (1 - recycling fraction)
+```
+
+The teaching example assumes four people, `100 L` of stored water, `5 L` used
+per person per day, and immediate recovery of `80%` of all used water. The net
+loss is `4 L` per day, leaving `60 L` after ten days. These are illustrative
+inputs, not measured Mars habitat requirements. A day here means 24 hours,
+not a Martian sol.
+
+```bash
+python3 03_Systems_Simulation/mars_water_budget.py
+```
+
+The returned list starts with day-zero stock. Inventory never becomes negative;
+a final zero means exhaustion during or at the end of that period, not a full
+day of supply. The model assumes immediate recycling and excludes water
+quality, processing delays, leaks, resupply, and other survival needs. It is a
+starting point for learning resource accounting, not a prediction of survival
+time. Future exercises could add a plot or compare recycling rates.
 
 ## Hot Drink Cooling Study
 
