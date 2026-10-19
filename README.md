@@ -45,6 +45,7 @@ Physics-related practice scripts. Each file focuses on one formula, model, or en
 - `automatic_water_tank.py`: Simulates a pump that automatically keeps a tank between two water levels.
 - `buoyancy_score.py`: Illustrates the payload-to-boat mass ratio from an IDEA printed-boat project.
 - `cooling_curve.py`: Plots a hot drink approaching room temperature using Newton's cooling law.
+- `battery_runtime.py`: Estimates constant-power device runtime from battery energy and efficiency.
 - `projectile_sim.py`: Returns an analytical projectile trajectory without air resistance.
 - `projectile_drag.py`: Uses RK4 to simulate projectile motion with quadratic air resistance.
 - `compare_projectile_models.py`: Compares the vacuum and air-drag models in a table and plot.
@@ -104,6 +105,13 @@ See the [exoplanet-transit study guide](06_Astronomy/README.md) for the model, a
 - `exoplanet_transit.py`: Calculates how a planet blocks part of a star's light as it moves across the stellar disk.
 - `transit_study.py`: Generates and plots a synthetic exoplanet transit light curve.
 
+## Editor Setup
+
+The workspace settings in `.vscode/settings.json` tell Pylance where the
+learning scripts live. This lets it resolve imports from the tests without
+changing the numbered folder structure. Select a Python interpreter with the
+packages from `requirements.txt` installed if external imports are unresolved.
+
 ## Requirements
 
 Most scripts only use standard Python 3. The visualization scripts also use:
@@ -130,6 +138,7 @@ python3 02_Computational_Physics/center_of_mass.py
 python3 02_Computational_Physics/automatic_water_tank.py
 python3 02_Computational_Physics/buoyancy_score.py
 python3 02_Computational_Physics/cooling_curve.py
+python3 02_Computational_Physics/battery_runtime.py
 python3 02_Computational_Physics/escape_velocity.py
 python3 01_Numerical_Methods/monte_carlo_pi.py
 python3 01_Numerical_Methods/random_walk_diffusion.py
@@ -402,6 +411,23 @@ day of supply. The model assumes immediate recycling and excludes water
 quality, processing delays, leaks, resupply, and other survival needs. It is a
 starting point for learning resource accounting, not a prediction of survival
 time. Future exercises could add a plot or compare recycling rates.
+
+## Simple Battery Runtime
+
+For a device drawing constant power:
+
+```text
+runtime (hours) = battery energy (Wh) * efficiency / device power (W)
+```
+
+The illustrative example uses `100 Wh`, `20 W`, and `80%` efficiency, giving
+`4.0 hours`. It assumes the stated battery energy is available before conversion
+losses and the device power stays constant. Battery aging, temperature, and
+shutdown limits can change real runtime.
+
+```bash
+python3 02_Computational_Physics/battery_runtime.py
+```
 
 ## Hot Drink Cooling Study
 

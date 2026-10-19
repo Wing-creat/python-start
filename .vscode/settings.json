@@ -1,0 +1,11 @@
+{
+    "python.analysis.extraPaths": [
+        "./00_Archive_Basics",
+        "./01_Numerical_Methods",
+        "./02_Computational_Physics",
+        "./03_Systems_Simulation",
+        "./04_Robotics_Simulator",
+        "./05_Optics",
+        "./06_Astronomy"
+    ]
+}
