@@ -46,6 +46,7 @@ Physics-related practice scripts. Each file focuses on one formula, model, or en
 - `buoyancy_score.py`: Illustrates the payload-to-boat mass ratio from an IDEA printed-boat project.
 - `cooling_curve.py`: Plots a hot drink approaching room temperature using Newton's cooling law.
 - `battery_runtime.py`: Estimates constant-power device runtime from battery energy and efficiency.
+- `wind_chill.py`: Compares actual air temperature with estimated wind chill as wind speed increases.
 - `projectile_sim.py`: Returns an analytical projectile trajectory without air resistance.
 - `projectile_drag.py`: Uses RK4 to simulate projectile motion with quadratic air resistance.
 - `compare_projectile_models.py`: Compares the vacuum and air-drag models in a table and plot.
@@ -139,6 +140,7 @@ python3 02_Computational_Physics/automatic_water_tank.py
 python3 02_Computational_Physics/buoyancy_score.py
 python3 02_Computational_Physics/cooling_curve.py
 python3 02_Computational_Physics/battery_runtime.py
+python3 02_Computational_Physics/wind_chill.py
 python3 02_Computational_Physics/escape_velocity.py
 python3 01_Numerical_Methods/monte_carlo_pi.py
 python3 01_Numerical_Methods/random_walk_diffusion.py
@@ -411,6 +413,40 @@ day of supply. The model assumes immediate recycling and excludes water
 quality, processing delays, leaks, resupply, and other survival needs. It is a
 starting point for learning resource accounting, not a prediction of survival
 time. Future exercises could add a plot or compare recycling rates.
+
+## Wind Chill: A Cold Evening Walk
+
+Inspired by evening walks in Stockton: why can the same air temperature feel
+colder when it is windy? Moving air increases heat loss from exposed skin.
+This small formula-based study holds air temperature at an illustrative `5 °C`
+and varies wind speed from `5` to `40 km/h`; it does not use live weather data.
+
+The metric wind chill formula is:
+
+```text
+W = 13.12 + 0.6215*T - 11.37*v**0.16 + 0.3965*T*v**0.16
+```
+
+Here `T` is air temperature in °C, `v` is wind speed in km/h measured at the
+standard 10-metre height, and `W` is the estimated wind chill in °C.
+Sources: [Environment and Climate Change Canada glossary](https://www.climat.weather.gc.ca/glossary_e.html)
+and [NWS wind chill explanation and limits](https://www.weather.gov/safety/cold-faqs).
+The script accepts temperatures at or below `10 °C` and wind speeds at least
+`5 km/h` (a rounded-up cutoff above the NWS limit of 3 mph). Other inputs are
+rejected instead of extending the formula into warm or calm conditions.
+
+Run from the repository root; edit `temperature_c` in `main()` to experiment:
+
+```bash
+python3 02_Computational_Physics/wind_chill.py
+```
+
+![Wind chill compared with actual air temperature](assets/wind_chill.png)
+
+The air-temperature line stays flat while estimated wind chill falls as wind
+increases. Wind chill is an exposed-skin heat-loss index, not a measurement of
+body temperature or a complete prediction of personal comfort. This exercise
+does not model clothing, activity, humidity, sunshine, or local shelter.
 
 ## Simple Battery Runtime
 
