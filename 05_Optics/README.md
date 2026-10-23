@@ -33,6 +33,7 @@ The calculations use normalized coordinates, so the plots show spatial-frequency
 | `defocus_sweep.py` | How quickly does peak intensity fall as defocus grows? | Relative peak intensity from `0.0` to `1.0` wave |
 | `tilt_study.py` | Does every phase error blur the pattern? | Beam-pointing shift caused by a linear phase ramp |
 | `grid_convergence_study.py` | Is the reported defocus result dependent on grid size? | Peak intensity across five numerical resolutions |
+| `airy_validation.py` | Does the ideal FFT result agree with independent theory? | Airy comparison and absolute error versus grid size |
 
 ## Key Results
 
@@ -56,6 +57,7 @@ python3 05_Optics/defocus_study.py
 python3 05_Optics/defocus_sweep.py
 python3 05_Optics/tilt_study.py
 python3 05_Optics/grid_convergence_study.py
+python3 05_Optics/airy_validation.py
 ```
 
 Run the automated tests with:
@@ -76,6 +78,67 @@ The tests verify several physical and numerical expectations:
 - positive and negative tilt move the peak in opposite directions;
 - finer grids produce a more stable defocus result;
 - each plotting function can write to a requested output directory.
+
+## Validation Against the Airy Pattern
+
+The original convergence study checks stability of a defocused peak. This
+additional experiment compares the ideal circular aperture with an independent
+analytical solution, under uniform coherent illumination and zero phase error:
+
+```text
+u = 2*pi*a*f
+I(f)/I(0) = (2*J1(u)/u)**2
+I(0)/I(0) = 1
+```
+
+Here `a` is aperture radius and `f` is spatial frequency in cycles per coordinate
+unit. `J1` is the first-order Bessel function, evaluated using
+[SciPy's j1](https://docs.scipy.org/doc/scipy/reference/generated/scipy.special.j1.html).
+The circular-aperture result is described in Goodman's
+[Introduction to Fourier Optics, section 4.3.2](https://neurophysics.ucsd.edu/courses/physics_4L/Introduction%20to%20Fourier%20Optics.pdf).
+The first dark ring occurs at `u ≈ 3.831706`.
+
+Install the updated requirements in an active virtual environment before running:
+
+```bash
+python -m pip install -r requirements.txt
+python 05_Optics/airy_validation.py
+python -m unittest discover -s tests -p 'test_airy_validation.py'
+```
+
+The experiment fixes the coordinate span at `L=2.0` and radius at `a=0.35`.
+Because the existing grid includes both endpoints, its spacing is `L/(N-1)`.
+Each aperture is zero-padded to `M=4*(N-1)` samples per side, giving the same
+frequency spacing `1/(M*spacing)=0.125` on every grid. Zero-padding samples the
+transform more densely; only increasing `N` refines the aperture boundary.
+
+Errors use the central horizontal cross-section at the same 97 frequency
+points in `[-6, 6]`. Both curves have unit central intensity. We calculate
+`RMSE = sqrt(mean((FFT - theory)**2))` and `max(abs(FFT - theory))`.
+These are absolute errors in normalized intensity, not pointwise percentage
+errors, which would be undefined at theoretical dark rings.
+
+| Aperture grid N | RMSE | Maximum absolute error |
+| --- | --- | --- |
+| 33 | 3.619318e-3 | 9.327582e-3 |
+| 65 | 2.286820e-3 | 5.853074e-3 |
+| 129 | 4.253615e-4 | 9.635404e-4 |
+| 257 | 1.763124e-4 | 3.864315e-4 |
+| 513 | 6.154981e-5 | 1.728819e-4 |
+
+![Airy theory and FFT cross-sections](../assets/airy_comparison.png)
+![Error against Airy theory](../assets/airy_grid_error.png)
+
+For these grids, RMSE decreases by about 59 times from the coarsest to finest
+grid. The staircase approximation to the circular boundary contributes to the
+remaining error. Other grid choices need not decrease monotonically, and this
+experiment does not establish a particular convergence order. The tests check
+the theoretical center and first zero, shared frequency coordinates, and
+coarse-to-fine agreement without requiring every refinement to improve.
+
+This validates the normalized ideal center slice over the chosen frequency
+range. It does not independently validate absolute optical power, the entire
+2D field, or the defocus and tilt models.
 
 ## Limitations
 

@@ -96,6 +96,7 @@ See the [Fourier-optics study guide](05_Optics/README.md) for the model, experim
 - `defocus_sweep.py`: Measures how the diffraction peak changes as defocus increases.
 - `tilt_study.py`: Shows how a linear wavefront tilt shifts the far-field diffraction pattern.
 - `grid_convergence_study.py`: Checks whether the defocus result stabilizes as the numerical grid is refined.
+- `airy_validation.py`: Compares circular-aperture FFT intensity with Airy theory and reports error across five grid resolutions (uses SciPy).
 
 ### `06_Astronomy`
 
@@ -151,6 +152,7 @@ python3 05_Optics/defocus_study.py
 python3 05_Optics/defocus_sweep.py
 python3 05_Optics/tilt_study.py
 python3 05_Optics/grid_convergence_study.py
+python3 05_Optics/airy_validation.py
 python3 06_Astronomy/exoplanet_transit.py
 python3 06_Astronomy/transit_study.py
 ```
