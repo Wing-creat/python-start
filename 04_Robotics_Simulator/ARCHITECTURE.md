@@ -21,7 +21,12 @@ This is not meant to be a complete robotics software stack. It is a small practi
 - **Logic:** Uses forward kinematics to calculate reachable end-effector positions.
 - **Physics:** Shows how link lengths define the minimum and maximum reach.
 
-### 4. Signal Processing (`../02_Computational_Physics/ema_filter.py`)
+### 4. Inverse Kinematics (`two_link_inverse_kinematics.py`)
+- **Model:** The same two-link planar arm and link lengths as the workspace study.
+- **Logic:** Uses the cosine rule to find the joint angles for a target position.
+- **Physics:** Shows the elbow-up and elbow-down configurations and rejects targets outside the reachable annulus.
+
+### 5. Signal Processing (`../02_Computational_Physics/ema_filter.py`)
 - **Algorithm:** Exponential Moving Average (EMA).
 - **Logic:** Smooths noisy sensor data, such as distance or encoder readings.
 - **Application:** A simple first step toward cleaner robot sensor measurements.

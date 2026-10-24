@@ -82,6 +82,7 @@ Basic robotics-related code based on ideas I have encountered through robotics p
 - `robot_core.py`: Models a simple two-wheel differential drive robot and updates its position over time.
 - `two_dof_arm_torque.py`: Simulates the base joint torque of a 2-DOF robotic arm carrying a 5kg payload.
 - `two_link_arm_workspace.py`: Visualizes the reachable area of a two-link planar arm.
+- `two_link_inverse_kinematics.py`: Finds the joint angles that place a two-link arm at a chosen target.
 - `ARCHITECTURE.md`: Notes about the purpose of the robotics simulation folder.
 
 ### `05_Optics`
@@ -147,6 +148,7 @@ python3 01_Numerical_Methods/monte_carlo_pi.py
 python3 01_Numerical_Methods/random_walk_diffusion.py
 python3 04_Robotics_Simulator/robot_core.py
 python3 04_Robotics_Simulator/two_link_arm_workspace.py
+python3 04_Robotics_Simulator/two_link_inverse_kinematics.py
 python3 05_Optics/diffraction_study.py
 python3 05_Optics/defocus_study.py
 python3 05_Optics/defocus_sweep.py
@@ -254,6 +256,35 @@ python3 04_Robotics_Simulator/two_link_arm_workspace.py
 ```
 
 The empty center of the plot is physically meaningful: the arm cannot reach closer than the difference between its two link lengths without changing the mechanism.
+
+## Two-Link Arm Inverse Kinematics
+
+The workspace study starts with joint angles and calculates the end-effector
+position. This inverse-kinematics example asks the opposite question: which
+joint angles place the arm at a chosen target `(x, y)`?
+
+For link lengths `L1` and `L2`, the elbow angle comes from the cosine rule:
+
+```text
+cos(theta2) = (x^2 + y^2 - L1^2 - L2^2) / (2 * L1 * L2)
+```
+
+The example target is `(0.45 m, 0.35 m)`. It has two solutions: an elbow-up
+pose and an elbow-down pose. Each result is checked by feeding its angles back
+into the existing forward-kinematics equation. Targets closer than `0.10 m` or
+farther than `0.80 m` from the base are rejected as unreachable.
+
+Run the study from the repository root:
+
+```bash
+python3 04_Robotics_Simulator/two_link_inverse_kinematics.py
+```
+
+![Two-Link Arm Inverse Kinematics](assets/two_link_inverse_kinematics.png)
+
+This analytical model assumes a planar arm with unrestricted joint rotation.
+It does not include motor limits, collisions, path planning, or three-dimensional
+motion.
 
 ## Sensor Filter Comparison
 
