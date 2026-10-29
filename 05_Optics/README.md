@@ -34,6 +34,7 @@ The calculations use normalized coordinates, so the plots show spatial-frequency
 | `tilt_study.py` | Does every phase error blur the pattern? | Beam-pointing shift caused by a linear phase ramp |
 | `grid_convergence_study.py` | Is the reported defocus result dependent on grid size? | Peak intensity across five numerical resolutions |
 | `airy_validation.py` | Does the ideal FFT result agree with independent theory? | Airy comparison and absolute error versus grid size |
+| `beam_alignment.py` | Can beam position be measured before adding feedback? | Noise-free tilt-to-centroid calibration |
 
 ## Key Results
 
@@ -43,6 +44,7 @@ The calculations use normalized coordinates, so the plots show spatial-frequency
 | `0.5` waves of defocus | Peak intensity falls to about `0.405` of the ideal peak |
 | `1.0` wave of defocus | Peak intensity falls to about `0.049` of the ideal peak |
 | `2.0` waves of tilt | Peak moves by `6` simulation pixels while retaining about `0.979` relative peak intensity |
+| Beam-position calibration | Centroid changes by about `2.843` detector pixels per wave of tilt from `-2.0` to `2.0` waves |
 | Grid refinement | The `0.5`-wave result changes by only `0.000084` from `257 × 257` to `513 × 513` |
 
 These results show that defocus and tilt have different signatures. Defocus spreads light and lowers the peak, while tilt mainly shifts the location of the pattern.
@@ -58,6 +60,7 @@ python3 05_Optics/defocus_sweep.py
 python3 05_Optics/tilt_study.py
 python3 05_Optics/grid_convergence_study.py
 python3 05_Optics/airy_validation.py
+python3 05_Optics/beam_alignment.py
 ```
 
 Run the automated tests with:
@@ -76,8 +79,32 @@ The tests verify several physical and numerical expectations:
 - phase errors preserve the aperture amplitude;
 - defocus lowers the far-field peak;
 - positive and negative tilt move the peak in opposite directions;
+- a finite detector window measures centered and tilted beam centroids;
+- the noise-free beam position changes in the expected direction as tilt grows;
 - finer grids produce a more stable defocus result;
 - each plotting function can write to a requested output directory.
+
+## Active Alignment: Day One Baseline
+
+The first active-alignment milestone adds a measurement before adding a
+controller. For each horizontal wavefront tilt, the script calculates the FFT
+intensity and measures its intensity-weighted horizontal centroid inside a
+centered `61 × 61` detector window:
+
+```text
+x_centroid = sum(x_pixel * intensity) / sum(intensity)
+```
+
+Position is reported in detector pixels because this normalized model does not
+define a physical detector distance. Seventeen tilt values from `-2.0` to
+`2.0` waves produce a nearly linear calibration with a fitted slope of about
+`2.8427 detector pixels per wave`. The zero-tilt position is numerically zero.
+
+![Noise-free beam tilt calibration](../assets/beam_tilt_calibration.png)
+
+This is intentionally only the sensor baseline. Measurement noise and the
+proportional feedback loop will be added in later milestones, after confirming
+that the noise-free measurement behaves predictably.
 
 ## Validation Against the Airy Pattern
 
@@ -146,6 +173,6 @@ range. It does not independently validate absolute optical power, the entire
 - Coordinates and spatial-frequency axes are normalized.
 - The source is treated as ideal, coherent, and monochromatic.
 - Defocus and tilt are simplified phase functions rather than measured optical surfaces.
-- The model does not include lenses, propagation distance, polarization, detector response, or a feedback-control system.
+- The model does not include lenses, propagation distance, polarization, a physical camera response, or a feedback-control loop yet.
 
 The most important lesson from this project was not only how to generate a diffraction plot, but how to compare cases fairly, vary one parameter at a time, test expected behavior, and check numerical convergence.
