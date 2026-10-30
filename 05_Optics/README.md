@@ -35,6 +35,7 @@ The calculations use normalized coordinates, so the plots show spatial-frequency
 | `grid_convergence_study.py` | Is the reported defocus result dependent on grid size? | Peak intensity across five numerical resolutions |
 | `airy_validation.py` | Does the ideal FFT result agree with independent theory? | Airy comparison and absolute error versus grid size |
 | `beam_alignment.py` | Can beam position be measured before adding feedback? | Noise-free tilt-to-centroid calibration |
+| `beam_noise_study.py` | How does measurement noise change repeated beam readings? | Centroid distributions at three noise levels |
 
 ## Key Results
 
@@ -45,6 +46,7 @@ The calculations use normalized coordinates, so the plots show spatial-frequency
 | `1.0` wave of defocus | Peak intensity falls to about `0.049` of the ideal peak |
 | `2.0` waves of tilt | Peak moves by `6` simulation pixels while retaining about `0.979` relative peak intensity |
 | Beam-position calibration | Centroid changes by about `2.843` detector pixels per wave of tilt from `-2.0` to `2.0` waves |
+| Repeated noisy measurements | Larger input noise produces a wider distribution while the average remains close to the true position |
 | Grid refinement | The `0.5`-wave result changes by only `0.000084` from `257 × 257` to `513 × 513` |
 
 These results show that defocus and tilt have different signatures. Defocus spreads light and lowers the peak, while tilt mainly shifts the location of the pattern.
@@ -61,12 +63,13 @@ python3 05_Optics/tilt_study.py
 python3 05_Optics/grid_convergence_study.py
 python3 05_Optics/airy_validation.py
 python3 05_Optics/beam_alignment.py
+python3 05_Optics/beam_noise_study.py
 ```
 
 Run the automated tests with:
 
 ```bash
-python3 -m unittest tests.test_fourier_optics -v
+python3 -m unittest discover -s tests -v
 ```
 
 ## What the Tests Check
@@ -105,6 +108,39 @@ define a physical detector distance. Seventeen tilt values from `-2.0` to
 This is intentionally only the sensor baseline. Measurement noise and the
 proportional feedback loop will be added in later milestones, after confirming
 that the noise-free measurement behaves predictably.
+
+## Active Alignment: Day Two Measurement Noise
+
+Day Two keeps the true optical pattern unchanged and adds zero-mean Gaussian
+uncertainty to the measured centroid:
+
+```text
+x_measured = x_true + noise
+noise ~ Normal(0, sigma^2)
+```
+
+This is a simple detector-position model. It represents uncertainty after the
+centroid has been calculated; it is not a model of photon noise or individual
+camera pixels. A fixed random seed makes the experiment repeatable.
+
+For a `1.0`-wave tilt, the noise-free position is about `2.8428` detector
+pixels. Each case below uses 500 repeated measurements:
+
+| Input noise σ (pixels) | Measured mean (pixels) | Measured sample σ (pixels) |
+| ---: | ---: | ---: |
+| 0.05 | 2.8422 | 0.0480 |
+| 0.20 | 2.8402 | 0.1920 |
+| 0.50 | 2.8363 | 0.4800 |
+
+The measured spreads are close to their requested noise levels. Their small
+differences are expected from a finite random sample. More noise increases
+measurement uncertainty, but it does not create a large systematic shift in
+the average reading in this zero-mean model.
+
+![Repeated beam measurements with Gaussian noise](../assets/beam_noise_distributions.png)
+
+Feedback is still intentionally absent. Day Three can use these noisy readings
+as the input to a simple proportional alignment controller.
 
 ## Validation Against the Airy Pattern
 
@@ -173,6 +209,6 @@ range. It does not independently validate absolute optical power, the entire
 - Coordinates and spatial-frequency axes are normalized.
 - The source is treated as ideal, coherent, and monochromatic.
 - Defocus and tilt are simplified phase functions rather than measured optical surfaces.
-- The model does not include lenses, propagation distance, polarization, a physical camera response, or a feedback-control loop yet.
+- The model does not include lenses, propagation distance, polarization, photon-level camera noise, or a feedback-control loop yet.
 
 The most important lesson from this project was not only how to generate a diffraction plot, but how to compare cases fairly, vary one parameter at a time, test expected behavior, and check numerical convergence.
