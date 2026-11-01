@@ -36,6 +36,7 @@ The calculations use normalized coordinates, so the plots show spatial-frequency
 | `airy_validation.py` | Does the ideal FFT result agree with independent theory? | Airy comparison and absolute error versus grid size |
 | `beam_alignment.py` | Can beam position be measured before adding feedback? | Noise-free tilt-to-centroid calibration |
 | `beam_noise_study.py` | How does measurement noise change repeated beam readings? | Centroid distributions at three noise levels |
+| `beam_feedback_control.py` | Can simple feedback reduce a noisy beam-position error? | Position and tilt histories during one alignment run |
 
 ## Key Results
 
@@ -47,6 +48,7 @@ The calculations use normalized coordinates, so the plots show spatial-frequency
 | `2.0` waves of tilt | Peak moves by `6` simulation pixels while retaining about `0.979` relative peak intensity |
 | Beam-position calibration | Centroid changes by about `2.843` detector pixels per wave of tilt from `-2.0` to `2.0` waves |
 | Repeated noisy measurements | Larger input noise produces a wider distribution while the average remains close to the true position |
+| Proportional beam alignment | One example reduces the absolute true position from `4.2640` to `0.0379` detector pixels in 15 recorded steps |
 | Grid refinement | The `0.5`-wave result changes by only `0.000084` from `257 × 257` to `513 × 513` |
 
 These results show that defocus and tilt have different signatures. Defocus spreads light and lowers the peak, while tilt mainly shifts the location of the pattern.
@@ -64,6 +66,7 @@ python3 05_Optics/grid_convergence_study.py
 python3 05_Optics/airy_validation.py
 python3 05_Optics/beam_alignment.py
 python3 05_Optics/beam_noise_study.py
+python3 05_Optics/beam_feedback_control.py
 ```
 
 Run the automated tests with:
@@ -84,6 +87,8 @@ The tests verify several physical and numerical expectations:
 - positive and negative tilt move the peak in opposite directions;
 - a finite detector window measures centered and tilted beam centroids;
 - the noise-free beam position changes in the expected direction as tilt grows;
+- a moderate proportional gain reduces a noise-free initial beam offset;
+- a fixed random seed reproduces the same noisy control history;
 - finer grids produce a more stable defocus result;
 - each plotting function can write to a requested output directory.
 
@@ -139,8 +144,34 @@ the average reading in this zero-mean model.
 
 ![Repeated beam measurements with Gaussian noise](../assets/beam_noise_distributions.png)
 
-Feedback is still intentionally absent. Day Three can use these noisy readings
-as the input to a simple proportional alignment controller.
+Day Three uses these noisy readings as the input to a simple proportional
+alignment controller.
+
+## Active Alignment: Day Three Proportional Feedback
+
+Day Three closes the loop. At each recorded step, the script calculates the
+true centroid with the existing FFT model, adds one noisy sensor reading, and
+uses that reading to update the horizontal wavefront tilt:
+
+```text
+tilt_next = tilt_current - gain * measured_position
+```
+
+The gain therefore has units of `waves per detector pixel`. The example uses
+an initial tilt of `1.50 waves`, a gain of `0.20 waves per detector pixel`, a
+measurement-noise standard deviation of `0.05 detector pixel`, and a fixed
+random seed. It records 15 states, including the initial condition.
+
+In this one run, the true beam position changes from `4.2640` detector pixels
+to `-0.0379` detector pixels. The small motion near zero comes from responding
+to noisy measurements; this is not evidence that the same gain is best for
+every noise level.
+
+![Proportional beam alignment history](../assets/beam_feedback_control.png)
+
+This milestone demonstrates the feedback idea with one moderate gain. Day Four
+will compare gains and noise levels and then introduce RMS position error and
+settling time, rather than adding those measurements prematurely here.
 
 ## Validation Against the Airy Pattern
 
@@ -209,6 +240,7 @@ range. It does not independently validate absolute optical power, the entire
 - Coordinates and spatial-frequency axes are normalized.
 - The source is treated as ideal, coherent, and monochromatic.
 - Defocus and tilt are simplified phase functions rather than measured optical surfaces.
-- The model does not include lenses, propagation distance, polarization, photon-level camera noise, or a feedback-control loop yet.
+- The model does not include lenses, propagation distance, polarization, photon-level camera noise, or actuator limits.
+- The controller is one-dimensional proportional feedback, not a model of a complete optical-alignment system.
 
 The most important lesson from this project was not only how to generate a diffraction plot, but how to compare cases fairly, vary one parameter at a time, test expected behavior, and check numerical convergence.
