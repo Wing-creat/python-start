@@ -37,6 +37,7 @@ The calculations use normalized coordinates, so the plots show spatial-frequency
 | `beam_alignment.py` | Can beam position be measured before adding feedback? | Noise-free tilt-to-centroid calibration |
 | `beam_noise_study.py` | How does measurement noise change repeated beam readings? | Centroid distributions at three noise levels |
 | `beam_feedback_control.py` | Can simple feedback reduce a noisy beam-position error? | Position and tilt histories during one alignment run |
+| `beam_gain_noise_study.py` | How do gain and measurement noise affect control? | RMS error, settling step, and representative histories |
 
 ## Key Results
 
@@ -49,6 +50,7 @@ The calculations use normalized coordinates, so the plots show spatial-frequency
 | Beam-position calibration | Centroid changes by about `2.843` detector pixels per wave of tilt from `-2.0` to `2.0` waves |
 | Repeated noisy measurements | Larger input noise produces a wider distribution while the average remains close to the true position |
 | Proportional beam alignment | One example reduces the absolute true position from `4.2640` to `0.0379` detector pixels in 15 recorded steps |
+| Gain and noise comparison | Larger gain responds faster without noise but produces more residual motion when measurements are noisy |
 | Grid refinement | The `0.5`-wave result changes by only `0.000084` from `257 × 257` to `513 × 513` |
 
 These results show that defocus and tilt have different signatures. Defocus spreads light and lowers the peak, while tilt mainly shifts the location of the pattern.
@@ -67,6 +69,7 @@ python3 05_Optics/airy_validation.py
 python3 05_Optics/beam_alignment.py
 python3 05_Optics/beam_noise_study.py
 python3 05_Optics/beam_feedback_control.py
+python3 05_Optics/beam_gain_noise_study.py
 ```
 
 Run the automated tests with:
@@ -89,6 +92,8 @@ The tests verify several physical and numerical expectations:
 - the noise-free beam position changes in the expected direction as tilt grows;
 - a moderate proportional gain reduces a noise-free initial beam offset;
 - a fixed random seed reproduces the same noisy control history;
+- RMS error uses only the stated steady-state window;
+- settling requires the beam to remain inside the stated tolerance;
 - finer grids produce a more stable defocus result;
 - each plotting function can write to a requested output directory.
 
@@ -170,8 +175,48 @@ every noise level.
 ![Proportional beam alignment history](../assets/beam_feedback_control.png)
 
 This milestone demonstrates the feedback idea with one moderate gain. Day Four
-will compare gains and noise levels and then introduce RMS position error and
-settling time, rather than adding those measurements prematurely here.
+below compares gains and noise levels and introduces RMS position error and
+settling time as a separate experiment.
+
+## Active Alignment: Day Four Gain and Noise Study
+
+Day Four compares three controller gains and three measurement-noise levels.
+Every case starts at `1.50 waves` of tilt, records 40 states, and uses the same
+random seed. Two simple metrics make the comparison quantitative:
+
+```text
+steady-state RMS = sqrt(mean(true_position^2 over the final 10 states))
+settling step = first step after which |true_position| stays <= 0.10 pixel
+```
+
+If the position does not remain inside that band, the table reports
+`not settled`.
+
+| Gain (waves/pixel) | Noise σ (pixels) | RMS error (pixels) | Settling step |
+| ---: | ---: | ---: | ---: |
+| 0.05 | 0.00 | 0.0259 | 25 |
+| 0.05 | 0.05 | 0.0167 | 25 |
+| 0.05 | 0.20 | 0.0272 | 24 |
+| 0.20 | 0.00 | 0.0000 | 5 |
+| 0.20 | 0.05 | 0.0300 | 6 |
+| 0.20 | 0.20 | 0.1200 | not settled |
+| 0.50 | 0.00 | 0.0000 | 5 |
+| 0.50 | 0.05 | 0.0665 | 32 |
+| 0.50 | 0.20 | 0.2661 | not settled |
+
+![Beam gain and noise comparison](../assets/beam_gain_noise_study.png)
+
+The `0.05` gain is slow but reacts less strongly to noisy readings. The `0.20`
+gain reaches the settling band much sooner at low noise. The `0.50` gain
+alternates around zero and has the largest RMS error when noise is present.
+This illustrates a basic control tradeoff: a stronger correction can improve
+speed while also amplifying measurement noise.
+
+These values come from one fixed, repeatable noise sequence rather than an
+average of many random trials, so every row should not be interpreted as a
+universal monotonic trend. Day Five will check the final assumptions,
+reproducibility, edge cases, and explanation without making the controller
+more complicated.
 
 ## Validation Against the Airy Pattern
 
