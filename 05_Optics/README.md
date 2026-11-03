@@ -38,6 +38,7 @@ The calculations use normalized coordinates, so the plots show spatial-frequency
 | `beam_noise_study.py` | How does measurement noise change repeated beam readings? | Centroid distributions at three noise levels |
 | `beam_feedback_control.py` | Can simple feedback reduce a noisy beam-position error? | Position and tilt histories during one alignment run |
 | `beam_gain_noise_study.py` | How do gain and measurement noise affect control? | RMS error, settling step, and representative histories |
+| `beam_control_validation.py` | Do the RMS trends persist across random seeds? | Mean RMS and sample spread from five repeatable trials |
 
 ## Key Results
 
@@ -51,6 +52,7 @@ The calculations use normalized coordinates, so the plots show spatial-frequency
 | Repeated noisy measurements | Larger input noise produces a wider distribution while the average remains close to the true position |
 | Proportional beam alignment | One example reduces the absolute true position from `4.2640` to `0.0379` detector pixels in 15 recorded steps |
 | Gain and noise comparison | Larger gain responds faster without noise but produces more residual motion when measurements are noisy |
+| Multi-seed control validation | Five repeatable trials confirm that high gain produces more RMS position error under both tested noise levels |
 | Grid refinement | The `0.5`-wave result changes by only `0.000084` from `257 × 257` to `513 × 513` |
 
 These results show that defocus and tilt have different signatures. Defocus spreads light and lowers the peak, while tilt mainly shifts the location of the pattern.
@@ -70,6 +72,7 @@ python3 05_Optics/beam_alignment.py
 python3 05_Optics/beam_noise_study.py
 python3 05_Optics/beam_feedback_control.py
 python3 05_Optics/beam_gain_noise_study.py
+python3 05_Optics/beam_control_validation.py
 ```
 
 Run the automated tests with:
@@ -94,6 +97,7 @@ The tests verify several physical and numerical expectations:
 - a fixed random seed reproduces the same noisy control history;
 - RMS error uses only the stated steady-state window;
 - settling requires the beam to remain inside the stated tolerance;
+- repeated random seeds preserve the main gain-and-noise conclusion;
 - finer grids produce a more stable defocus result;
 - each plotting function can write to a requested output directory.
 
@@ -214,9 +218,39 @@ speed while also amplifying measurement noise.
 
 These values come from one fixed, repeatable noise sequence rather than an
 average of many random trials, so every row should not be interpreted as a
-universal monotonic trend. Day Five will check the final assumptions,
-reproducibility, edge cases, and explanation without making the controller
-more complicated.
+universal monotonic trend. Day Five below checks whether the main conclusion
+persists across several random seeds.
+
+## Active Alignment: Day Five Multi-Seed Validation
+
+The final optical milestone repeats the noisy cases with random seeds `1`
+through `5`. Every run still starts at `1.50 waves`, records 40 states, and
+calculates RMS from the final 10 true-position values. The table reports the
+mean RMS and sample standard deviation across the five runs:
+
+| Gain (waves/pixel) | Noise σ (pixels) | Mean RMS (pixels) | Sample σ (pixels) |
+| ---: | ---: | ---: | ---: |
+| 0.05 | 0.05 | 0.0323 | 0.0110 |
+| 0.05 | 0.20 | 0.0631 | 0.0346 |
+| 0.20 | 0.05 | 0.0315 | 0.0024 |
+| 0.20 | 0.20 | 0.1261 | 0.0095 |
+| 0.50 | 0.05 | 0.0806 | 0.0206 |
+| 0.50 | 0.20 | 0.3227 | 0.0825 |
+
+![Beam-control multi-seed validation](../assets/beam_control_validation.png)
+
+The exact RMS value changes with the random sequence, but two conclusions are
+consistent across these trials: stronger measurement noise raises the average
+position error, and the `0.50` gain produces more RMS error than the `0.20`
+gain at both tested noise levels. The `0.05` and `0.20` gains have similar
+average error at low noise, but Day Four showed that `0.20` settles much sooner.
+
+Five seeds are enough for a small reproducibility check, not a precise
+statistical study. Together, Days One through Five demonstrate measurement,
+noise, feedback, parameter comparison, and repeatability without claiming a
+laboratory-grade alignment system. The active optical alignment case study is
+now complete; the broader project can next apply the same learning sequence to
+two-link robotic-arm trajectory tracking.
 
 ## Validation Against the Airy Pattern
 
@@ -287,5 +321,6 @@ range. It does not independently validate absolute optical power, the entire
 - Defocus and tilt are simplified phase functions rather than measured optical surfaces.
 - The model does not include lenses, propagation distance, polarization, photon-level camera noise, or actuator limits.
 - The controller is one-dimensional proportional feedback, not a model of a complete optical-alignment system.
+- The multi-seed validation uses five simulated noise sequences, not experimental detector data.
 
 The most important lesson from this project was not only how to generate a diffraction plot, but how to compare cases fairly, vary one parameter at a time, test expected behavior, and check numerical convergence.
