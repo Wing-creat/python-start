@@ -45,6 +45,7 @@ Physics-related practice scripts. Each file focuses on one formula, model, or en
 - `automatic_water_tank.py`: Simulates a pump that automatically keeps a tank between two water levels.
 - `buoyancy_score.py`: Illustrates the payload-to-boat mass ratio from an IDEA printed-boat project.
 - `cooling_curve.py`: Plots a hot drink approaching room temperature using Newton's cooling law.
+- `room_heater.py`: Connects heat capacity, electrical power, and ideal room-air heating time.
 - `battery_runtime.py`: Estimates constant-power device runtime from battery energy and efficiency.
 - `wind_chill.py`: Compares actual air temperature with estimated wind chill as wind speed increases.
 - `projectile_sim.py`: Returns an analytical projectile trajectory without air resistance.
@@ -141,6 +142,7 @@ python3 02_Computational_Physics/center_of_mass.py
 python3 02_Computational_Physics/automatic_water_tank.py
 python3 02_Computational_Physics/buoyancy_score.py
 python3 02_Computational_Physics/cooling_curve.py
+python3 02_Computational_Physics/room_heater.py
 python3 02_Computational_Physics/battery_runtime.py
 python3 02_Computational_Physics/wind_chill.py
 python3 02_Computational_Physics/escape_velocity.py
@@ -526,6 +528,50 @@ python3 02_Computational_Physics/cooling_curve.py
 ```
 
 ![Hot Drink Cooling Curve](assets/cooling_curve.png)
+
+## Ideal Room Heater Study
+
+This study connects several introductory thermodynamics and electrical-power
+formulas in one idealized example:
+
+```text
+room-air mass:      m = density * floor area * height
+heating energy:     Q = m*c*delta_T = C*delta_T
+heating time:       t = Q / P
+heater resistance:  R = V^2 / P
+```
+
+Here `c = 1005 J/(kg·°C)` is the assumed specific heat capacity of air. For
+the example room, `C = mc = 120600 J/°C` is the total heat capacity of the
+modeled room air.
+
+The example uses a `1500 W` heater in a `25 m²` room with a `4 m` ceiling.
+With an assumed air density of `1.2 kg/m³`, the room contains about `120 kg`
+of air. Raising that air from `15 °C` to `22 °C` requires `844.2 kJ` in the
+ideal model.
+
+| Heater setting | Effective power | Ideal heating time |
+| ---: | ---: | ---: |
+| 50% | 750 W | 18.76 min |
+| 75% | 1125 W | 12.51 min |
+| 100% | 1500 W | 9.38 min |
+
+At `120 V`, the ideal resistance corresponding to `1500 W` is `9.60 Ω`.
+At full power and the same `4 m` room height, the ideal time increases from
+`5.63 min` for `15 m²` to `13.13 min` for `35 m²` because a larger room
+contains more air.
+
+```bash
+python3 02_Computational_Physics/room_heater.py
+```
+
+![Ideal room-air heating at three heater settings](assets/room_heater.png)
+
+The straight lines are a consequence of assuming constant heater power and no
+heat loss. The model heats only the air; real walls, furniture, windows,
+ventilation, imperfect mixing, and thermostat cycling all increase or change
+the real heating time. The result is therefore a formula-learning exercise,
+not a heater-sizing recommendation or a prediction for a real building.
 
 ## Escape Velocity Study
 
