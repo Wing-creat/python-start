@@ -46,6 +46,7 @@ Physics-related practice scripts. Each file focuses on one formula, model, or en
 - `buoyancy_score.py`: Illustrates the payload-to-boat mass ratio from an IDEA printed-boat project.
 - `cooling_curve.py`: Plots a hot drink approaching room temperature using Newton's cooling law.
 - `room_heater.py`: Connects heat capacity, electrical power, and ideal room-air heating time.
+- `calorimetry_lab.py`: Compares heat exchange between hot metal samples and cooler water.
 - `battery_runtime.py`: Estimates constant-power device runtime from battery energy and efficiency.
 - `wind_chill.py`: Compares actual air temperature with estimated wind chill as wind speed increases.
 - `projectile_sim.py`: Returns an analytical projectile trajectory without air resistance.
@@ -143,6 +144,7 @@ python3 02_Computational_Physics/automatic_water_tank.py
 python3 02_Computational_Physics/buoyancy_score.py
 python3 02_Computational_Physics/cooling_curve.py
 python3 02_Computational_Physics/room_heater.py
+python3 02_Computational_Physics/calorimetry_lab.py
 python3 02_Computational_Physics/battery_runtime.py
 python3 02_Computational_Physics/wind_chill.py
 python3 02_Computational_Physics/escape_velocity.py
@@ -572,6 +574,43 @@ heat loss. The model heats only the air; real walls, furniture, windows,
 ventilation, imperfect mixing, and thermostat cycling all increase or change
 the real heating time. The result is therefore a formula-learning exercise,
 not a heater-sizing recommendation or a prediction for a real building.
+
+## Simple Calorimetry Lab
+
+This script models a hot metal sample placed in cooler water. The metal loses
+heat while the water gains heat until both reach the same temperature:
+
+```text
+Q = m*c*(T_final - T_initial)
+Q_metal + Q_water = 0
+```
+
+The example starts with `100 g` of metal at `100 °C` and `100 g` of water at
+`20 °C`. It compares three common metals using constant specific heat values.
+
+| Metal | Specific heat (J/g·°C) | Equilibrium temperature |
+| --- | ---: | ---: |
+| Aluminum | 0.897 | 34.12 °C |
+| Iron | 0.449 | 27.75 °C |
+| Copper | 0.385 | 26.74 °C |
+
+Aluminum reaches the highest final temperature because the same mass of hot
+aluminum stores more thermal energy per degree than iron or copper. The plot
+also shows that increasing the mass of hot metal raises the equilibrium
+temperature.
+
+Run the study from the repository root:
+
+```bash
+python3 02_Computational_Physics/calorimetry_lab.py
+```
+
+![Equilibrium temperature for three hot metals](assets/calorimetry_lab.png)
+
+This ideal model assumes perfect thermal contact and constant specific heat.
+It ignores the heat capacity of the cup, heat exchange with the surrounding
+air, evaporation, and phase changes. These limitations make it a starting
+point for understanding calorimetry rather than a complete laboratory model.
 
 ## Escape Velocity Study
 
