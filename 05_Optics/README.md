@@ -39,6 +39,7 @@ The calculations use normalized coordinates, so the plots show spatial-frequency
 | `beam_feedback_control.py` | Can simple feedback reduce a noisy beam-position error? | Position and tilt histories during one alignment run |
 | `beam_gain_noise_study.py` | How do gain and measurement noise affect control? | RMS error, settling step, and representative histories |
 | `beam_control_validation.py` | Do the RMS trends persist across random seeds? | Mean RMS and sample spread from five repeatable trials |
+| `spectrometer_calibration.py` | How can detector pixels be converted to wavelength? | Linear fit, residuals, and an unknown-line estimate |
 
 ## Key Results
 
@@ -54,6 +55,7 @@ The calculations use normalized coordinates, so the plots show spatial-frequency
 | Gain and noise comparison | Larger gain responds faster without noise but produces more residual motion when measurements are noisy |
 | Multi-seed control validation | Five repeatable trials confirm that high gain produces more RMS position error under both tested noise levels |
 | Grid refinement | The `0.5`-wave result changes by only `0.000084` from `257 × 257` to `513 × 513` |
+| Spectrometer calibration | Example reference lines give an RMSE of about `0.0848 nm` and estimate pixel `716` as `518.99 nm` |
 
 These results show that defocus and tilt have different signatures. Defocus spreads light and lowers the peak, while tilt mainly shifts the location of the pattern.
 
@@ -73,6 +75,7 @@ python3 05_Optics/beam_noise_study.py
 python3 05_Optics/beam_feedback_control.py
 python3 05_Optics/beam_gain_noise_study.py
 python3 05_Optics/beam_control_validation.py
+python3 05_Optics/spectrometer_calibration.py
 ```
 
 Run the automated tests with:
@@ -99,7 +102,38 @@ The tests verify several physical and numerical expectations:
 - settling requires the beam to remain inside the stated tolerance;
 - repeated random seeds preserve the main gain-and-noise conclusion;
 - finer grids produce a more stable defocus result;
+- a known linear pixel-to-wavelength relationship is recovered correctly;
+- calibration residuals use the stated `known - fitted` sign convention;
 - each plotting function can write to a requested output directory.
+
+## Spectrometer Wavelength Calibration
+
+This separate optics exercise models a common laboratory task: converting a
+spectral peak's detector position into wavelength. Five example reference
+lines are fitted with a linear equation:
+
+```text
+wavelength_nm = slope * pixel + intercept
+```
+
+The values are teaching data, not measurements collected by the student. The
+fit gives a slope of about `0.249951 nm/pixel`, an intercept of about
+`340.022952 nm`, and a calibration RMSE of `0.0848 nm`. Using that equation,
+an example unknown peak at pixel `716` is estimated as `518.99 nm`.
+
+The lower panel shows signed residuals:
+
+```text
+residual = known wavelength - fitted wavelength
+```
+
+![Example spectrometer wavelength calibration](../assets/spectrometer_calibration.png)
+
+This exercise assumes the pixel-to-wavelength relationship is linear across
+the displayed detector range. A real calibration would use measured reference
+lines, include measurement uncertainty, and check whether a higher-order model
+is justified. Peak detection and instrument resolution are outside this small
+study.
 
 ## Active Alignment: Day One Baseline
 
