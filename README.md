@@ -1,19 +1,29 @@
-# Python Start
+# Python
 
-This is a personal Python practice repository. I am preparing to study Engineering Physics, so many of the scripts are small exercises that connect programming with physics, numerical methods, units, and simple robotics ideas.
+I am a first-year Engineering Physics student at the University of the Pacific. This repository is my ongoing Python learning portfolio: small, runnable projects that connect coursework and curiosity with numerical methods, computational physics, optics, astronomy, and basic robotics.
 
-The goal is not to build a large software project yet. Most files are short programs written to practice:
+The work ranges from early syntax exercises to tested simulations and comparisons with analytical results. It is a record of what I am learning, not a claim that these scripts are complete research or production software. Across the projects, I practice:
 
 - basic Python syntax and functions
 - using formulas in code
 - checking simple input errors
 - working with lists, dictionaries, and classes
 - plotting results with `matplotlib`
-- connecting code with physics and engineering examples
+- explaining assumptions and checking results against physical expectations
 
-## Summer 2026 Learning Update
+## Explore the Repository
 
-During part of summer 2026, updates became less regular while I prepared for an international move and attended university orientation. That transition was part of getting ready to begin my Engineering Physics studies. I am now returning to a steadier learning routine through small, manageable projects such as the bouncing-ball simulation and bridge load distribution study.
+- [Numerical methods](#01_numerical_methods): Monte Carlo estimation and random-walk diffusion.
+- [Computational physics](#02_computational_physics): motion, energy, circuits, sensors, and everyday engineering models.
+- [Systems simulation](#03_systems_simulation): small rule-based and resource-budget examples.
+- [Robotics](#04_robotics_simulator): differential-drive motion and two-link arm geometry.
+- [Optics](05_Optics/README.md): Fourier optics, beam alignment, and spectrometer calibration.
+- [Astronomy](06_Astronomy/README.md): an introductory exoplanet-transit model.
+- [How to run and test](#how-to-run): commands and the repository test suite.
+
+## Learning Timeline
+
+The earliest scripts document my Python practice before university. Updates were less regular during my summer 2026 move and orientation. Since starting Engineering Physics at the University of the Pacific in fall 2026, I have continued with small projects tied to introductory engineering and physics ideas, then built longer, step-by-step studies in optics and astronomy. The older exercises remain here to show that progression.
 
 ## Repository Structure
 
