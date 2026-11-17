@@ -116,10 +116,11 @@ See the [Fourier-optics study guide](05_Optics/README.md) for the model, experim
 
 Introductory astronomy studies that use geometry and simple numerical models to explain observable effects.
 
-See the [exoplanet-transit study guide](06_Astronomy/README.md) for the model, assumptions, results, tests, and limitations.
+See the [astronomy study guide](06_Astronomy/README.md) for the models, assumptions, results, tests, and limitations.
 
 - `exoplanet_transit.py`: Calculates how a planet blocks part of a star's light as it moves across the stellar disk.
 - `transit_study.py`: Generates and plots a synthetic exoplanet transit light curve.
+- `mars_oxygen_escape.py`: Compares ideal Mars escape speed with the thermal speed of oxygen molecules.
 
 ## Editor Setup
 
@@ -173,6 +174,7 @@ python3 05_Optics/airy_validation.py
 python3 05_Optics/spectrometer_calibration.py
 python3 06_Astronomy/exoplanet_transit.py
 python3 06_Astronomy/transit_study.py
+python3 06_Astronomy/mars_oxygen_escape.py
 ```
 
 Some files print numerical results in the terminal. Others create plots to make the physics or numerical method easier to see.
