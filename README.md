@@ -18,7 +18,7 @@ The work ranges from early syntax exercises to tested simulations and comparison
 - [Systems simulation](#03_systems_simulation): small rule-based and resource-budget examples.
 - [Robotics](#04_robotics_simulator): differential-drive motion and two-link arm geometry.
 - [Optics](05_Optics/README.md): Fourier optics, beam alignment, and spectrometer calibration.
-- [Astronomy](06_Astronomy/README.md): an introductory exoplanet-transit model.
+- [Astronomy and Mars oxygen](06_Astronomy/README.md): exoplanet transits, an oxygen escape-speed comparison, and a habitat storage budget.
 - [How to run and test](#how-to-run): commands and the repository test suite.
 
 ## Learning Timeline
@@ -101,7 +101,7 @@ Basic robotics-related code based on ideas I have encountered through robotics p
 
 Introductory computational-optics studies that connect simple physical models with numerical methods and plots.
 
-See the [Fourier-optics study guide](05_Optics/README.md) for the model, experiment sequence, key results, tests, and limitations.
+See the [optics study guide](05_Optics/README.md) for the model, experiment sequence, key results, tests, and limitations.
 
 - `fourier_optics.py`: Creates circular-aperture fields, adds simple defocus, and calculates far-field intensity.
 - `diffraction_study.py`: Visualizes the aperture, diffraction pattern, and center intensity cross-section.
@@ -110,17 +110,24 @@ See the [Fourier-optics study guide](05_Optics/README.md) for the model, experim
 - `tilt_study.py`: Shows how a linear wavefront tilt shifts the far-field diffraction pattern.
 - `grid_convergence_study.py`: Checks whether the defocus result stabilizes as the numerical grid is refined.
 - `airy_validation.py`: Compares circular-aperture FFT intensity with Airy theory and reports error across five grid resolutions (uses SciPy).
+- `beam_alignment.py`: Measures the beam centroid and calibrates its position against wavefront tilt.
+- `beam_noise_study.py`: Adds repeatable measurement noise to the beam-position readings.
+- `beam_feedback_control.py`: Uses simple proportional feedback to correct a simulated beam offset.
+- `beam_gain_noise_study.py`: Compares controller gain and measurement noise using RMS error and settling time.
+- `beam_control_validation.py`: Repeats the gain-and-noise comparison across several random seeds.
 - `spectrometer_calibration.py`: Fits a pixel-to-wavelength calibration and checks its residual error.
 
 ### `06_Astronomy`
 
-Introductory astronomy studies that use geometry and simple numerical models to explain observable effects.
+Introductory astronomy studies and a small Mars habitat budget that use simple
+models to make physical assumptions visible.
 
 See the [astronomy study guide](06_Astronomy/README.md) for the models, assumptions, results, tests, and limitations.
 
 - `exoplanet_transit.py`: Calculates how a planet blocks part of a star's light as it moves across the stellar disk.
 - `transit_study.py`: Generates and plots a synthetic exoplanet transit light curve.
 - `mars_oxygen_escape.py`: Compares ideal Mars escape speed with the thermal speed of oxygen molecules.
+- `mars_oxygen_budget.py`: Compares simple oxygen-production rates against crew use and leakage in an enclosed Mars habitat.
 
 ## Editor Setup
 
@@ -135,6 +142,7 @@ Most scripts only use standard Python 3. The visualization scripts also use:
 
 - `matplotlib`
 - `numpy`
+- `scipy` (for the Airy-pattern comparison)
 
 Install the extra packages with:
 
@@ -171,10 +179,16 @@ python3 05_Optics/defocus_sweep.py
 python3 05_Optics/tilt_study.py
 python3 05_Optics/grid_convergence_study.py
 python3 05_Optics/airy_validation.py
+python3 05_Optics/beam_alignment.py
+python3 05_Optics/beam_noise_study.py
+python3 05_Optics/beam_feedback_control.py
+python3 05_Optics/beam_gain_noise_study.py
+python3 05_Optics/beam_control_validation.py
 python3 05_Optics/spectrometer_calibration.py
 python3 06_Astronomy/exoplanet_transit.py
 python3 06_Astronomy/transit_study.py
 python3 06_Astronomy/mars_oxygen_escape.py
+python3 06_Astronomy/mars_oxygen_budget.py
 ```
 
 Some files print numerical results in the terminal. Others create plots to make the physics or numerical method easier to see.
@@ -687,6 +701,11 @@ The same `0.5`-wave defocus calculation is repeated on grids from `33 × 33` to 
 This check does not prove that the simplified optical model represents every real system. It shows that this reported result is no longer changing much when the numerical grid is refined.
 
 ![Fourier-Optics Grid Convergence](assets/fourier_optics_grid_convergence.png)
+
+The [optics study guide](05_Optics/README.md) also documents a quantitative
+comparison with Airy theory, a step-by-step noisy beam-alignment simulation,
+and a separate synthetic spectrometer-calibration exercise. These are learning
+models with stated assumptions, not measurements from a laboratory instrument.
 
 ## Example Outputs
 

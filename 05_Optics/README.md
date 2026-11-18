@@ -1,6 +1,9 @@
-# Introductory Fourier-Optics Study
+# Introductory Computational-Optics Studies
 
-This folder is a small computational-optics study built as part of my Engineering Physics learning portfolio. The goal was to understand how an aperture and simple wavefront errors affect a far-field diffraction pattern, then check that the numerical result is stable when the grid is refined.
+This folder contains a Fourier-optics learning sequence, a simulated beam-alignment
+extension, and a separate spectrometer-calibration exercise. The Fourier-optics
+sequence asks how an aperture and simple wavefront errors affect a far-field
+diffraction pattern, then checks numerical stability and agreement with Airy theory.
 
 It is a learning project, not a model of NIF or a complete laser system.
 

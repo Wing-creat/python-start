@@ -1,15 +1,17 @@
-# Introductory Astronomy Studies
+# Introductory Astronomy and Mars Oxygen Studies
 
-The exoplanet-transit study below models how an exoplanet blocks part of its star's light
-during a transit. It uses synthetic data and simple circle geometry so the
-connection between the model and the light curve remains easy to explain.
+This folder contains an exoplanet-transit study and two small Mars-oxygen
+questions. The transit model uses synthetic data and simple circle geometry.
+The Mars studies compare physical speed scales and track an illustrative
+enclosed-habitat oxygen inventory; neither predicts atmospheric lifetime or
+human survival.
 
-## Scientific Question
+## Exoplanet Transit: Scientific Question
 
 How do planet size and the path across the star change the observed transit
 light curve?
 
-## Simplified Model
+## Exoplanet Transit: Simplified Model
 
 The star and planet are represented as circular disks. The planet is opaque,
 and the star has uniform brightness. The unobscured stellar flux is normalized
@@ -39,7 +41,7 @@ is the closest projected distance between the two centers. In the example,
 the star radius is `1.0`, so the impact-parameter values are also easy to read
 as fractions of the stellar radius.
 
-## Model Assumptions
+## Exoplanet Transit: Model Assumptions
 
 - The star is a uniformly bright circular disk.
 - The planet is an opaque circular disk.
@@ -55,10 +57,16 @@ as fractions of the stellar radius.
   comparison plots.
 - `mars_oxygen_escape.py`: Compares an ideal Mars escape-speed scale with
   molecular oxygen's thermal-speed scale; see the separate Day 1 section below.
+- `mars_oxygen_budget.py`: Tracks a simplified enclosed-habitat oxygen inventory;
+  see the separate Day 2 section below.
 - `../tests/test_exoplanet_transit.py`: Tests the physical geometry and input
   validation.
 - `../tests/test_transit_study.py`: Tests curve generation, parameter effects,
   and plot output.
+- `../tests/test_mars_oxygen_escape.py`: Tests the speed calculations, inputs,
+  and plot output.
+- `../tests/test_mars_oxygen_budget.py`: Tests daily accounting, storage bounds,
+  inputs, and plot output.
 
 ## Run the Study
 
@@ -69,11 +77,12 @@ pip install -r requirements.txt
 python3 06_Astronomy/exoplanet_transit.py
 python3 06_Astronomy/transit_study.py
 python3 06_Astronomy/mars_oxygen_escape.py
+python3 06_Astronomy/mars_oxygen_budget.py
 ```
 
-The study script saves both figures in the root `assets/` directory.
+The plotting scripts save their figures in the root `assets/` directory.
 
-## Baseline Light Curve
+## Exoplanet Transit: Baseline Light Curve
 
 The baseline example uses a star radius of `1.0`, planet radius of `0.1`,
 transit speed of `0.5`, and impact parameter of `0.0`. At mid-transit, the
@@ -86,7 +95,7 @@ partial circle overlap.
 
 ![Synthetic Exoplanet Transit](../assets/exoplanet_transit_light_curve.png)
 
-## Parameter Comparison
+## Exoplanet Transit: Parameter Comparison
 
 The left panel compares planet radii of `0.05`, `0.10`, and `0.15`. For a
 central transit, their minimum flux values are `0.9975`, `0.9900`, and
@@ -101,16 +110,19 @@ shallower, rounded light curve.
 
 ## Tests
 
-Run the astronomy tests with:
+Run the repository tests, including all four astronomy and Mars-oxygen test
+modules, from the root:
 
 ```bash
-python3 -m unittest tests/test_exoplanet_transit.py tests/test_transit_study.py -v
+python3 -m unittest discover -s tests -v
 ```
 
-The tests check known transit depths, overlap boundaries, curve symmetry,
-parameter effects, invalid inputs, and plot creation.
+The transit tests check known depths, overlap boundaries, curve symmetry,
+parameter effects, invalid inputs, and plot creation. The Mars-oxygen tests
+check speed calculations, daily inventory accounting, storage bounds, and
+their generated plots.
 
-## Limitations
+## Exoplanet Transit: Limitations
 
 This is an introductory educational model. It does not include limb darkening,
 measurement noise, curved orbital motion, orbital eccentricity, stellar
@@ -150,3 +162,41 @@ the need to consider escape from the upper atmosphere, not just the surface:
 [NASA atmospheric-loss overview](https://ntrs.nasa.gov/api/citations/20200003142/downloads/20200003142.pdf).
 MAVEN has also observed non-thermal atmospheric loss through
 [sputtering](https://science.nasa.gov/missions/maven/nasas-maven-makes-first-observation-of-atmospheric-sputtering-at-mars/).
+
+## Mars Oxygen: Day 2 Habitat Storage Budget
+
+Day 1 asked about oxygen in the *planet's atmosphere*. Day 2 asks a different,
+smaller engineering question: if a sealed habitat stores oxygen, how does its
+stock change as oxygen is produced, used by a crew, and lost through a leak?
+
+```text
+next stock = current stock + production - crew use - leak
+crew use   = crew size × use per person
+break-even production = crew use + leak
+```
+
+The example assumes four people, `1.0 kg` of oxygen use per person per
+24-hour day, a fixed `0.1 kg/day` leak, `10 kg` of starting stored oxygen,
+and a `20 kg` storage capacity. These are **teaching inputs**, not measured
+Mars-habitat requirements. Production is compared at `3.5` and `4.5 kg/day`.
+After each day, stock is limited to the range from zero to tank capacity;
+any production beyond capacity is treated as unused.
+
+With these inputs, break-even production is `4.1 kg/day`. The lower-rate
+scenario reaches zero stored oxygen during day 17, while the higher-rate
+scenario ends day 20 at `18.0 kg`. A zero value means the *daily inventory
+budget* cannot be met; it does not tell us how long anyone could breathe.
+
+![Illustrative Mars habitat oxygen storage](../assets/mars_oxygen_budget.png)
+
+Run from the repository root:
+
+```bash
+python3 06_Astronomy/mars_oxygen_budget.py
+```
+
+This model does not calculate cabin pressure, oxygen partial pressure, air
+mixing, CO2 removal, real production efficiency, or equipment failures. Its
+fixed leak is a mass loss per day, not a pressure-driven leak model. The
+point is to make the conservation-of-mass budget visible before adding any
+more realistic complications.
