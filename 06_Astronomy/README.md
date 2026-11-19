@@ -1,10 +1,10 @@
 # Introductory Astronomy and Mars Oxygen Studies
 
-This folder contains an exoplanet-transit study and two small Mars-oxygen
-questions. The transit model uses synthetic data and simple circle geometry.
-The Mars studies compare physical speed scales and track an illustrative
-enclosed-habitat oxygen inventory; neither predicts atmospheric lifetime or
-human survival.
+This folder contains an exoplanet-transit study and three small Mars-oxygen
+steps. The transit model uses synthetic data and simple circle geometry.
+The Mars studies compare physical speed scales, track an illustrative
+enclosed-habitat oxygen inventory, and examine one day without production.
+They do not predict atmospheric lifetime or human survival.
 
 ## Exoplanet Transit: Scientific Question
 
@@ -59,6 +59,8 @@ as fractions of the stellar radius.
   molecular oxygen's thermal-speed scale; see the separate Day 1 section below.
 - `mars_oxygen_budget.py`: Tracks a simplified enclosed-habitat oxygen inventory;
   see the separate Day 2 section below.
+- `mars_oxygen_outage.py`: Compares the Day 2 example with a one-day production
+  outage; see the separate Day 3 section below.
 - `../tests/test_exoplanet_transit.py`: Tests the physical geometry and input
   validation.
 - `../tests/test_transit_study.py`: Tests curve generation, parameter effects,
@@ -67,6 +69,7 @@ as fractions of the stellar radius.
   and plot output.
 - `../tests/test_mars_oxygen_budget.py`: Tests daily accounting, storage bounds,
   inputs, and plot output.
+- `../tests/test_mars_oxygen_outage.py`: Tests the Day 3 plot output.
 
 ## Run the Study
 
@@ -78,6 +81,7 @@ python3 06_Astronomy/exoplanet_transit.py
 python3 06_Astronomy/transit_study.py
 python3 06_Astronomy/mars_oxygen_escape.py
 python3 06_Astronomy/mars_oxygen_budget.py
+python3 06_Astronomy/mars_oxygen_outage.py
 ```
 
 The plotting scripts save their figures in the root `assets/` directory.
@@ -110,7 +114,7 @@ shallower, rounded light curve.
 
 ## Tests
 
-Run the repository tests, including all four astronomy and Mars-oxygen test
+Run the repository tests, including all five astronomy and Mars-oxygen test
 modules, from the root:
 
 ```bash
@@ -120,7 +124,7 @@ python3 -m unittest discover -s tests -v
 The transit tests check known depths, overlap boundaries, curve symmetry,
 parameter effects, invalid inputs, and plot creation. The Mars-oxygen tests
 check speed calculations, daily inventory accounting, storage bounds, and
-their generated plots.
+the generated plots.
 
 ## Exoplanet Transit: Limitations
 
@@ -200,3 +204,28 @@ mixing, CO2 removal, real production efficiency, or equipment failures. Its
 fixed leak is a mass loss per day, not a pressure-driven leak model. The
 point is to make the conservation-of-mass budget visible before adding any
 more realistic complications.
+
+## Mars Oxygen: Day 3 One-Day Production Outage
+
+Day 3 keeps the Day 2 teaching inputs and asks what happens if the oxygen
+producer stops for just one 24-hour day. The new optional `outage_day` argument
+uses day numbers starting at 1; production is zero only on that day. Crew use
+and the fixed leak continue, and production returns to `4.5 kg/day` afterward.
+
+The example stops production on day 8. Stored oxygen falls from `12.8 kg` at
+the end of day 7 to `8.7 kg` at the end of day 8; without the outage it would
+have reached `13.2 kg`. The outage stock then rises again by `0.4 kg/day` and
+ends day 20 at `13.5 kg`, compared with `18.0 kg` normally. Its minimum is
+`8.7 kg`. Because the two scenarios have the same production after day 8,
+their `4.5 kg` gap does not close without extra production or resupply.
+
+![One-day Mars habitat oxygen-production outage](../assets/mars_oxygen_outage.png)
+
+Run from the repository root:
+
+```bash
+python3 06_Astronomy/mars_oxygen_outage.py
+```
+
+This is still a mass-inventory exercise. It does not predict cabin oxygen
+pressure, equipment reliability, or a safe duration for a real crew.

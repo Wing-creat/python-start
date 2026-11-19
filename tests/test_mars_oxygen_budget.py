@@ -42,6 +42,25 @@ class MarsOxygenBudgetTests(unittest.TestCase):
     def test_zero_days_returns_initial_stock(self):
         self.assertEqual(simulate_oxygen_budget(days=0), [10.0])
 
+    def test_one_day_outage_removes_production_only_on_that_day(self):
+        levels = simulate_oxygen_budget(
+            initial_oxygen_kg=10, production_kg_per_day=4.5,
+            crew_size=4, use_per_person_kg_per_day=1,
+            leak_kg_per_day=0.1, capacity_kg=20, days=3,
+            outage_day=2,
+        )
+        self.assertAlmostEqual(levels[1], 10.4)
+        self.assertAlmostEqual(levels[2], 6.3)
+        self.assertAlmostEqual(levels[3], 6.7)
+
+    def test_outage_day_must_be_within_the_simulation(self):
+        for outage_day in (0, -1, 4, 1.5, True):
+            with self.subTest(outage_day=outage_day):
+                with self.assertRaises(ValueError):
+                    simulate_oxygen_budget(days=3, outage_day=outage_day)
+        with self.assertRaises(ValueError):
+            simulate_oxygen_budget(days=0, outage_day=1)
+
     def test_invalid_inputs_are_rejected(self):
         invalid = (
             {"initial_oxygen_kg": -1}, {"initial_oxygen_kg": 21},
