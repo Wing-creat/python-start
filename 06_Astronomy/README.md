@@ -1,9 +1,9 @@
 # Introductory Astronomy and Mars Oxygen Studies
 
-This folder contains an exoplanet-transit study and three small Mars-oxygen
+This folder contains an exoplanet-transit study and four small Mars-oxygen
 steps. The transit model uses synthetic data and simple circle geometry.
 The Mars studies compare physical speed scales, track an illustrative
-enclosed-habitat oxygen inventory, and examine one day without production.
+enclosed-habitat oxygen inventory, and examine production outages.
 They do not predict atmospheric lifetime or human survival.
 
 ## Exoplanet Transit: Scientific Question
@@ -61,6 +61,8 @@ as fractions of the stellar radius.
   see the separate Day 2 section below.
 - `mars_oxygen_outage.py`: Compares the Day 2 example with a one-day production
   outage; see the separate Day 3 section below.
+- `mars_oxygen_outage_duration.py`: Compares how much oxygen remains after
+  outages of different lengths; see Day 4 below.
 - `../tests/test_exoplanet_transit.py`: Tests the physical geometry and input
   validation.
 - `../tests/test_transit_study.py`: Tests curve generation, parameter effects,
@@ -70,6 +72,7 @@ as fractions of the stellar radius.
 - `../tests/test_mars_oxygen_budget.py`: Tests daily accounting, storage bounds,
   inputs, and plot output.
 - `../tests/test_mars_oxygen_outage.py`: Tests the Day 3 plot output.
+- `../tests/test_mars_oxygen_outage_duration.py`: Tests the Day 4 plot output.
 
 ## Run the Study
 
@@ -82,6 +85,7 @@ python3 06_Astronomy/transit_study.py
 python3 06_Astronomy/mars_oxygen_escape.py
 python3 06_Astronomy/mars_oxygen_budget.py
 python3 06_Astronomy/mars_oxygen_outage.py
+python3 06_Astronomy/mars_oxygen_outage_duration.py
 ```
 
 The plotting scripts save their figures in the root `assets/` directory.
@@ -114,7 +118,7 @@ shallower, rounded light curve.
 
 ## Tests
 
-Run the repository tests, including all five astronomy and Mars-oxygen test
+Run the repository tests, including all six astronomy and Mars-oxygen test
 modules, from the root:
 
 ```bash
@@ -229,3 +233,33 @@ python3 06_Astronomy/mars_oxygen_outage.py
 
 This is still a mass-inventory exercise. It does not predict cabin oxygen
 pressure, equipment reliability, or a safe duration for a real crew.
+
+## Mars Oxygen: Day 4 Consecutive Outage Days
+
+Day 4 asks how the same stored-oxygen budget changes if the production outage
+starts on day 8 and lasts more than one 24-hour day. The reusable model now
+accepts an optional `outage_duration_days`; its default is `1`, so the Day 3
+example still means a one-day outage. Production is zero on each outage day,
+while crew use and the fixed leak continue.
+
+| Consecutive outage days | Stored oxygen after outage |
+| ---: | ---: |
+| 1 | 8.7 kg |
+| 2 | 4.6 kg |
+| 3 | 0.5 kg |
+| 4 | 0.0 kg |
+
+The store held `12.8 kg` at the end of day 7. Without production, the daily
+budget loses `4.1 kg`, so three days leave just `0.5 kg`. The fourth day
+would require more oxygen than remains; the model clamps the inventory to
+zero. Zero means the budget cannot be met during that day, **not** that four
+days would be a safe real-world outage duration. Even positive inventory does
+not establish breathable cabin conditions.
+
+![Stored oxygen after outages of different lengths](../assets/mars_oxygen_outage_duration.png)
+
+Run from the repository root:
+
+```bash
+python3 06_Astronomy/mars_oxygen_outage_duration.py
+```

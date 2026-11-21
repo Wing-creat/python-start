@@ -61,6 +61,23 @@ class MarsOxygenBudgetTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             simulate_oxygen_budget(days=0, outage_day=1)
 
+    def test_consecutive_outage_days_reduce_stock_until_production_resumes(self):
+        levels = simulate_oxygen_budget(days=12, outage_day=8, outage_duration_days=4)
+        self.assertAlmostEqual(levels[7], 12.8)
+        self.assertAlmostEqual(levels[8], 8.7)
+        self.assertAlmostEqual(levels[9], 4.6)
+        self.assertAlmostEqual(levels[10], 0.5)
+        self.assertEqual(levels[11], 0.0)
+        self.assertAlmostEqual(levels[12], 0.4)
+
+    def test_outage_duration_must_fit_the_simulation(self):
+        for duration in (0, -1, 1.5, True, 4):
+            with self.subTest(duration=duration):
+                with self.assertRaises(ValueError):
+                    simulate_oxygen_budget(days=3, outage_day=1, outage_duration_days=duration)
+        with self.assertRaises(ValueError):
+            simulate_oxygen_budget(days=3, outage_duration_days=2)
+
     def test_invalid_inputs_are_rejected(self):
         invalid = (
             {"initial_oxygen_kg": -1}, {"initial_oxygen_kg": 21},

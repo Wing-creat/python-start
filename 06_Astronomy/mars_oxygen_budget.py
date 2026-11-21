@@ -24,12 +24,13 @@ def simulate_oxygen_budget(
     capacity_kg: float = 20.0,
     days: int = 20,
     outage_day: int | None = None,
+    outage_duration_days: int = 1,
 ) -> list[float]:
     """Return day-zero and end-of-day stored oxygen masses in kg.
 
     Each day is 24 hours, not a Martian sol. Production, use, and leakage
-    are fixed daily amounts. If specified, outage_day is a 1-based day on
-    which production is zero; this is inventory accounting only.
+    are fixed daily amounts. If specified, outage_day is the first 1-based
+    day with zero production. This is inventory accounting only.
     """
     amounts = (
         (initial_oxygen_kg, "Initial oxygen"),
@@ -54,12 +55,23 @@ def simulate_oxygen_budget(
         or not 1 <= outage_day <= days
     ):
         raise ValueError("Outage day must be an integer from 1 through days.")
+    if (
+        not isinstance(outage_duration_days, int)
+        or isinstance(outage_duration_days, bool)
+        or outage_duration_days < 1
+        or (outage_day is None and outage_duration_days != 1)
+        or (outage_day is not None and outage_day + outage_duration_days - 1 > days)
+    ):
+        raise ValueError("Outage duration must be a positive integer within the simulation.")
 
     daily_use_kg = crew_size * use_per_person_kg_per_day
     oxygen_kg = initial_oxygen_kg
     levels = [oxygen_kg]
     for day in range(1, days + 1):
-        daily_production_kg = 0.0 if day == outage_day else production_kg_per_day
+        is_outage = outage_day is not None and (
+            outage_day <= day < outage_day + outage_duration_days
+        )
+        daily_production_kg = 0.0 if is_outage else production_kg_per_day
         oxygen_kg += daily_production_kg - daily_use_kg - leak_kg_per_day
         oxygen_kg = min(capacity_kg, max(0.0, oxygen_kg))
         levels.append(oxygen_kg)

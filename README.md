@@ -129,6 +129,7 @@ See the [astronomy study guide](06_Astronomy/README.md) for the models, assumpti
 - `mars_oxygen_escape.py`: Compares ideal Mars escape speed with the thermal speed of oxygen molecules.
 - `mars_oxygen_budget.py`: Compares simple oxygen-production rates against crew use and leakage in an enclosed Mars habitat.
 - `mars_oxygen_outage.py`: Shows how one day without oxygen production changes the same habitat inventory.
+- `mars_oxygen_outage_duration.py`: Compares remaining stored oxygen after one to four consecutive production-outage days.
 
 ## Editor Setup
 
@@ -191,6 +192,7 @@ python3 06_Astronomy/transit_study.py
 python3 06_Astronomy/mars_oxygen_escape.py
 python3 06_Astronomy/mars_oxygen_budget.py
 python3 06_Astronomy/mars_oxygen_outage.py
+python3 06_Astronomy/mars_oxygen_outage_duration.py
 ```
 
 Some files print numerical results in the terminal. Others create plots to make the physics or numerical method easier to see.
